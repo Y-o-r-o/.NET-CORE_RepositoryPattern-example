@@ -398,6 +398,11 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
+# VSCode, c# folders
+.vscode/
+bin/
+obj/
+
 ##
 ## Visual studio for Mac
 ##
