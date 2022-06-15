@@ -1,11 +1,12 @@
-using LOGIC.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using RepositoryLayer.DTOs;
+using RepositoryLayer.Interfaces;
 
 namespace API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class WeatherForecastController : ControllerBase
+public class WeatherForecastController : BaseApiController
 {
 
     private readonly IWeatherForecastService _weatherForecastService;
@@ -16,8 +17,8 @@ public class WeatherForecastController : ControllerBase
     }
 
     [HttpGet(Name = "GetWeatherForecast")]
-    public IEnumerable<WeatherForecast> Get()
+    public async Task<IActionResult> GetTemperature()
     {
-        return _weatherForecastService.Get();
+        return HandleResult(await _weatherForecastService.GetTemperature("54.687156","25.279651"));
     }
 }
