@@ -7,7 +7,7 @@ namespace API.Extensions;
 
 public static class WebApplicationExtensions
 {
-    public static void ConfigurHttpRequestPipeline(this WebApplication app)
+    public static void Configure(this WebApplication app)
     {
         if (app.Environment.IsDevelopment())
         {

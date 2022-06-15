@@ -9,10 +9,10 @@ internal class Program
     static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-        builder.Services.AddApplicationServices();
+        builder.Services.ConfigureServices();
 
         var app = builder.Build();
-        app.ConfigurHttpRequestPipeline();
+        app.Configure();
 
         app.Run();
     }
