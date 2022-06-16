@@ -1,4 +1,5 @@
-using RepositoryLayer.RepositoryServices;
+using RepositoryLayer.Mappers;
+using ServiceClientLayer;
 
 namespace API.Extensions;
 
@@ -13,7 +14,13 @@ public static class ApplicationServiceExtensions
                 .AddSwaggerGen();
 
         services.Configure<OpenWeatherMapSettings>(config.GetSection("OpenWeatherMapSettings"));
+        
+        services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+        
         services.AddRepositoryServices();
+        services.AddServiceClientServices();
+
+
 
         return services;
     }

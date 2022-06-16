@@ -1,4 +1,4 @@
-namespace RepositoryLayer.Core;
+namespace Core;
 
 public class Result<T>
 {

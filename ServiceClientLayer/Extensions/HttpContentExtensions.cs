@@ -1,6 +1,6 @@
 using System.Text.Json;
 
-namespace RepositoryLayer.Extensions
+namespace ServiceClientLayer.Extensions
 {
     public static class HttpContentExtensions
     {

@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using RepositoryLayer.DTOs;
 using RepositoryLayer.Interfaces;
 
 namespace API.Controllers;
@@ -9,9 +8,9 @@ namespace API.Controllers;
 public class WeatherForecastController : BaseApiController
 {
 
-    private readonly IWeatherForecastService _weatherForecastService;
+    private readonly IWeatherForecastRepository _weatherForecastService;
 
-    public WeatherForecastController(IWeatherForecastService weatherForecastService)
+    public WeatherForecastController(IWeatherForecastRepository weatherForecastService)
     {
         _weatherForecastService = weatherForecastService;
     }

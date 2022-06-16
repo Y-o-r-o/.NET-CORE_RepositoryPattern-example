@@ -1,19 +1,16 @@
-using RepositoryLayer.DTOs;
-using RepositoryLayer.Interfaces;
-using RepositoryLayer.Extensions;
+using Core;
 using Microsoft.Extensions.Options;
-using RepositoryLayer.Core;
-using Microsoft.AspNetCore.Mvc;
+using ServiceClientLayer.Models;
+using ServiceClientLayer.Extensions;
 
-namespace RepositoryLayer.RepositoryServices;
+namespace ServiceClientLayer.ServiceClients.OpenWeatherService;
 
-public class WeatherForecastService : IWeatherForecastService
+public class OpenWeatherServiceClient : IOpenWeatherServiceClient
 {
-
     private string _apiKey;
     private HttpClient _httpClient;
 
-    public WeatherForecastService(HttpClient httpClient, IOptions<OpenWeatherMapSettings> config)
+    public OpenWeatherServiceClient(HttpClient httpClient, IOptions<OpenWeatherMapSettings> config)
     {
         _apiKey = config.Value.ApiKey;
         _httpClient = httpClient;

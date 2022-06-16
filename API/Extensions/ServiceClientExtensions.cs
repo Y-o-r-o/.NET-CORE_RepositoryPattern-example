@@ -3,9 +3,9 @@ using RepositoryLayer.RepositoryServices;
 
 namespace API.Extensions;
 
-public static class RepositoryServicesExtensions
+public static class ServiceClientExtensions
 {
-    public static IServiceCollection AddRepositoryServices(this IServiceCollection services)
+    public static IServiceCollection AddServiceClientServices(this IServiceCollection services)
     {
         services.AddHttpClient<IWeatherForecastRepository, WeatherForecastRepository>(c =>
         {
