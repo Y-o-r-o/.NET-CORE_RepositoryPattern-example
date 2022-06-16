@@ -3,6 +3,7 @@ using RepositoryLayer.Interfaces;
 using RepositoryLayer.Extensions;
 using Microsoft.Extensions.Options;
 using RepositoryLayer.Core;
+using Microsoft.AspNetCore.Mvc;
 
 namespace RepositoryLayer.RepositoryServices;
 
@@ -20,21 +21,20 @@ public class WeatherForecastService : IWeatherForecastService
 
     public async Task<Result<WeatherForecast>> GetTemperature(string latitude, string longtitude)
     {
-        var parameters = new List<(string, string)>()
-        {
+        var parameters = new List<(string, string)>(){
             ("lat", latitude),
             ("lon", longtitude),
-            ("appid", _apiKey)
-        };
+            ("appid", _apiKey)};
 
         var response = await _httpClient.GetAsync("data/2.5/weather", parameters);
 
-        if (response.IsSuccessStatusCode){
+        if (response.IsSuccessStatusCode)
+        {
             var weatherForecast = await response.Content.Read<WeatherForecast>();
             return Result<WeatherForecast>.Success(weatherForecast);
         }
 
-        return Result<WeatherForecast>.Failure("...some error");
+        return Result<WeatherForecast>.Failure("OpenWeatherMap api error: " + response.StatusCode.ToString());
     }
 
 }
