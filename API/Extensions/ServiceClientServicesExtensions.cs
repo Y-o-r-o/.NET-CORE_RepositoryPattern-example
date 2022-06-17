@@ -4,7 +4,7 @@ using ServiceClientLayer.ServiceClients.OpenWeatherService;
 
 namespace API.Extensions;
 
-public static class ServiceClientExtensions
+public static class ServiceClientServicesExtensions
 {
     public static IServiceCollection AddServiceClientServices(this IServiceCollection services)
     {

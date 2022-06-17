@@ -1,3 +1,4 @@
+using BusinessLayer.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using RepositoryLayer.Interfaces;
 
@@ -8,16 +9,16 @@ namespace API.Controllers;
 public class WeatherForecastController : BaseApiController
 {
 
-    private readonly IWeatherForecastRepository _weatherForecastService;
+    private readonly IWeatherServices _weatherServices;
 
-    public WeatherForecastController(IWeatherForecastRepository weatherForecastService)
+    public WeatherForecastController(IWeatherServices weatherServices)
     {
-        _weatherForecastService = weatherForecastService;
+        _weatherServices = weatherServices;
     }
 
     [HttpGet(Name = "GetWeatherForecast")]
     public async Task<IActionResult> GetTemperature()
     {
-        return HandleResult(await _weatherForecastService.GetTemperature("54.687156","25.279651"));
+        return HandleResult(await _weatherServices.GetWeather("54.687156","25.279651"));
     }
 }

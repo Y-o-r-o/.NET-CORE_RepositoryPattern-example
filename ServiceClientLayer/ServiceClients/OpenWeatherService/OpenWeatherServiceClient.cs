@@ -18,6 +18,7 @@ public class OpenWeatherServiceClient : IOpenWeatherServiceClient
 
     public async Task<Result<WeatherForecast>> GetTemperature(string latitude, string longtitude)
     {
+        throw new Exception("testing middleware");
         var parameters = new List<(string, string)>(){
             ("lat", latitude),
             ("lon", longtitude),

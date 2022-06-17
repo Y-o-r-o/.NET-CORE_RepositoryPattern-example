@@ -1,4 +1,3 @@
-
 using Core;
 using RepositoryLayer.Models;
 
@@ -6,5 +5,6 @@ namespace RepositoryLayer.Interfaces;
 
 public interface IWeatherForecastRepository
 {
-     public Task<Result<WeatherForecast>> GetTemperature(string latitude, string longtitude);
+     public Task<Result<Main>> GetWeather(string latitude, string longtitude);
+
 }

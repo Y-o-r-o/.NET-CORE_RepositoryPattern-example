@@ -7,8 +7,6 @@ public static class ApplicationServiceExtensions
 {
     public static IServiceCollection ConfigureServices(this IServiceCollection services, IConfiguration config)
     {
-        services.AddAutoMapper(typeof(MappingProfiles).Assembly);
-
         services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
@@ -19,6 +17,7 @@ public static class ApplicationServiceExtensions
         
         services.AddServiceClientServices();
         services.AddRepositoryServices();
+        services.AddBusinessServices();
 
         return services;
     }
