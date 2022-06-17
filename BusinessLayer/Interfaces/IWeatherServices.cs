@@ -5,5 +5,5 @@ namespace BusinessLayer.Interfaces;
 
 public interface IWeatherServices
 {
-    public Task<Result<MainForecastDTO>> GetWeather(string latitude, string longtitude);
+    public Task<MainForecastDTO> GetWeather(string latitude, string longtitude);
 }

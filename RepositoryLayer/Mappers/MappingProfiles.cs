@@ -22,7 +22,7 @@ public static class MappingProfiles
                 Icon = fromWeather.Icon
             }),
             Base = from.Base,
-            Main = new Main
+            Main = new MainForecast
             {
                 Temp = from.Main.Temp,
                 FeelsLike = from.Main.FeelsLike,

@@ -9,7 +9,7 @@ public class WeatherForecast
 
     public string Base { get; set; }
 
-    public Main Main { get; set; }
+    public MainForecast Main { get; set; }
 
     public int Visibility { get; set; }
 
@@ -73,7 +73,7 @@ public class Coord
     public double Lat { get; set; }
 }
 
-public class Main
+public class MainForecast
 {
     public double Temp { get; set; }
 

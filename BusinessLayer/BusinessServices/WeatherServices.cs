@@ -18,7 +18,7 @@ public class WeatherServices : IWeatherServices
         _weatherForecastRepository = weatherForecastRepository;
     }
 
-    public async Task<Result<MainForecastDTO>> GetWeather(string latitude, string longtitude)
+    public async Task<MainForecastDTO> GetWeather(string latitude, string longtitude)
     {
         if (string.IsNullOrWhiteSpace(latitude))
         {
@@ -29,18 +29,8 @@ public class WeatherServices : IWeatherServices
             throw new ArgumentException(nameof(longtitude));
         }
 
-        var result = await _weatherForecastRepository.GetWeather(latitude, longtitude);
-
-        if (result.IsSuccess)
-        {
-            var weather = MappingProfiles.Map(result.Value);
-            return weather is null ?
-                Result<MainForecastDTO>.Failure("Could not mapp: " + nameof(weather)) :
-                Result<MainForecastDTO>.Success(weather);
-        }
-
-        return Result<MainForecastDTO>.Failure(result.Error);
-
+        var weather = MappingProfiles.Map(await _weatherForecastRepository.GetWeather(latitude, longtitude));
+        return weather;
     }
 
 }

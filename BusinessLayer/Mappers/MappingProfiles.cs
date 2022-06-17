@@ -5,11 +5,11 @@ namespace BusinessLayer.Mappers;
 
 public static class MappingProfiles
 {
-    public static MainForecastDTO Map(Main from)
+    public static MainForecastDTO Map(MainForecast from)
     {
         return new MainForecastDTO()
         {
-            TemperatureCelsius = from.Temp - 272.15
+            TemperatureCelsius = Helpers.Converter.KelvinToCelsius(from.Temp)
         };
     }
 }
