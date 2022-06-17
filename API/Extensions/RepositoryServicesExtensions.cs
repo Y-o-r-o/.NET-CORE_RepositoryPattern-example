@@ -7,11 +7,7 @@ public static class RepositoryServicesExtensions
 {
     public static IServiceCollection AddRepositoryServices(this IServiceCollection services)
     {
-        services.AddHttpClient<IWeatherForecastRepository, WeatherForecastRepository>(c =>
-        {
-            c.BaseAddress = new Uri("https://api.openweathermap.org");        
-        });
-
+        services.AddScoped<IWeatherForecastRepository, WeatherForecastRepository>();
         return services;
     }
 
