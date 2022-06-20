@@ -1,6 +1,5 @@
 using BusinessLayer.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using RepositoryLayer.Interfaces;
 
 namespace API.Controllers;
 
@@ -21,4 +20,5 @@ public class WeatherForecastController : BaseApiController
     {
         return HandleResult(await _weatherServices.GetWeather("54.687156","25.279651"));
     }
+
 }
