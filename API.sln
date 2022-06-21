@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RepositoryLayer", "Reposito
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceClientLayer", "ServiceClientLayer\ServiceClientLayer.csproj", "{4321E0E9-2843-4B57-BFBB-CF447FC6CAC7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence", "Persistence\Persistence.csproj", "{3B2406C3-302B-4915-BEE4-C2CB763C77B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{4321E0E9-2843-4B57-BFBB-CF447FC6CAC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4321E0E9-2843-4B57-BFBB-CF447FC6CAC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4321E0E9-2843-4B57-BFBB-CF447FC6CAC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B2406C3-302B-4915-BEE4-C2CB763C77B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B2406C3-302B-4915-BEE4-C2CB763C77B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B2406C3-302B-4915-BEE4-C2CB763C77B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B2406C3-302B-4915-BEE4-C2CB763C77B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

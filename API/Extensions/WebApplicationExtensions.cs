@@ -1,4 +1,5 @@
 using API.Middleware;
+using Persistence;
 
 namespace API.Extensions;
 
