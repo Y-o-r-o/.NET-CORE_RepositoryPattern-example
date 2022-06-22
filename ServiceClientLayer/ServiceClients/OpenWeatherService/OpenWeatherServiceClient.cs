@@ -1,5 +1,4 @@
 using Core;
-using Microsoft.Extensions.Options;
 using ServiceClientLayer.Models;
 using ServiceClientLayer.Extensions;
 
@@ -10,9 +9,9 @@ public class OpenWeatherServiceClient : IOpenWeatherServiceClient
     private string _apiKey;
     private HttpClient _httpClient;
 
-    public OpenWeatherServiceClient(HttpClient httpClient, IOptions<OpenWeatherMapSettings> config)
+    public OpenWeatherServiceClient(HttpClient httpClient, OpenWeatherMapSettings openWeatherMapSettings)
     {
-        _apiKey = config.Value.ApiKey;
+        _apiKey = openWeatherMapSettings.ApiKey;
         _httpClient = httpClient;
     }
 

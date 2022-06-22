@@ -1,19 +1,18 @@
-﻿namespace Core
+﻿namespace Core;
+
+public class AppException
 {
-    public class AppException
+    public AppException(int statusCode, string message, AdditionalInformation details = null)
     {
-        public AppException(int statusCode, string message, AdditionalInformation details = null)
-        {
-            StatusCode = statusCode;
-            Message = message;
-            Details = details;
-        }
-
-        public int StatusCode { get; set; }
-        public string Message { get; set; }
-        public AdditionalInformation Details { get; set; }
-
+        StatusCode = statusCode;
+        Message = message;
+        Details = details;
     }
+
+    public int StatusCode { get; set; }
+    public string Message { get; set; }
+    public AdditionalInformation Details { get; set; }
+
 }
 
 public class AdditionalInformation
@@ -23,12 +22,4 @@ public class AdditionalInformation
     public int Line { get; set; }
     public int Column { get; set; }
 
-    public override string ToString()
-    {
-        return $"AddiTionalInfo:" +
-            $" File: {File}," +
-            $" MethodName: {MethodName}," +
-            $" Line: {Line}," +
-            $" Column: {Column}";
-    }
 }

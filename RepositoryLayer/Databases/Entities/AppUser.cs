@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Persistence;
+namespace RepositoryLayer.Databases.Entities;
 
 public class AppUser : IdentityUser
 {

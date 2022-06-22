@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using RepositoryLayer.Databases.Configuration;
+using RepositoryLayer.Databases.Entities;
 
-namespace Persistence
+namespace RepositoryLayer.Databases
 {
     public class Seed
     {

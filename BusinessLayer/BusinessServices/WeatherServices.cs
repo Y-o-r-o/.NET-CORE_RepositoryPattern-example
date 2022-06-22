@@ -18,7 +18,7 @@ public class WeatherServices : IWeatherServices
         _weatherForecastRepository = weatherForecastRepository;
     }
 
-    public async Task<MainForecastDTO> GetWeather(string latitude, string longtitude)
+    public async Task<MainForecastDTO> GetWeatherAsync(string latitude, string longtitude)
     {
         if (string.IsNullOrWhiteSpace(latitude))
         {
@@ -29,7 +29,7 @@ public class WeatherServices : IWeatherServices
             throw new ArgumentException(nameof(longtitude));
         }
 
-        var weather = MappingProfiles.Map(await _weatherForecastRepository.GetWeather(latitude, longtitude));
+        var weather = MappingProfiles.Map(await _weatherForecastRepository.GetWeatherAsync(latitude, longtitude));
         return weather;
     }
 

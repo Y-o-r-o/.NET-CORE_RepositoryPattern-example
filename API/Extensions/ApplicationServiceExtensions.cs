@@ -1,6 +1,7 @@
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Persistence;
+using Microsoft.OpenApi.Models;
+using RepositoryLayer.Databases.Configuration;
 using ServiceClientLayer;
 
 namespace API.Extensions;
@@ -9,23 +10,20 @@ public static class ApplicationServiceExtensions
 {
     public static IServiceCollection ConfigureServices(this IServiceCollection services, IConfiguration config)
     {
-
+        services.ConfigureSettings(config);
         services.AddControllers();
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-
-        services.AddEndpointsApiExplorer()
-                .AddSwaggerGen();
-
 
         services.AddDbContext<DataContext>(options => options.UseSqlServer(config.GetConnectionString("Context")));
-        services.AddIdentityCore<AppUser>().AddEntityFrameworkStores<DataContext>();
 
-        services.Configure<OpenWeatherMapSettings>(config.GetSection("OpenWeatherMapSettings"));
+        // Learn more about configuzring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+        services.AddEndpointsApiExplorer()
+                .AddSwaggerGen();
 
         services.AddServiceClientServices();
         services.AddRepositoryServices();
         services.AddBusinessServices();
 
+        services.AddIdentityServices(config);
 
         return services;
     }

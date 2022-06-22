@@ -1,5 +1,4 @@
 using API.Middleware;
-using Persistence;
 
 namespace API.Extensions;
 
@@ -17,6 +16,7 @@ public static class WebApplicationExtensions
 
         app.UseHttpsRedirection();
 
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapControllers();

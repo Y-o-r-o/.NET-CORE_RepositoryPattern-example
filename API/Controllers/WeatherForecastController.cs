@@ -18,7 +18,7 @@ public class WeatherForecastController : BaseApiController
     [HttpGet(Name = "GetWeatherForecast")]
     public async Task<IActionResult> GetTemperature()
     {
-        return HandleResult(await _weatherServices.GetWeather("54.687156","25.279651"));
+        return HandleResult(await _weatherServices.GetWeatherAsync("54.687156","25.279651"));
     }
 
 }

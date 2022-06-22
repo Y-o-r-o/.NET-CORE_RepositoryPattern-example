@@ -16,7 +16,7 @@ public class WeatherForecastRepository : IWeatherForecastRepository
         _openWeatherServiceClient = openWeatherServiceClient;
     }
 
-    public async Task<MainForecast> GetWeather(string latitude, string longtitude)
+    public async Task<MainForecast> GetWeatherAsync(string latitude, string longtitude)
     {
         var response = await _openWeatherServiceClient.GetTemperature(latitude, longtitude);
 
