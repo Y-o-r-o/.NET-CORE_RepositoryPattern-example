@@ -1,4 +1,5 @@
-﻿using BusinessLayer.BusinessServices;
+﻿using BusinessLayer.DTOs;
+using BusinessLayer.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,32 +12,26 @@ namespace API.Controllers;
 public class AuthenticationController : BaseApiController
 {
 
-    private IUserServices _userServices;
+    private IAuthenticateService _authenticateService;
 
-    public AuthenticationController(IUserServices userServices)
+    public AuthenticationController(IAuthenticateService authenticateService)
     {
-        _userServices = userServices;
+        _authenticateService = authenticateService;
     }
 
-    [HttpGet("GetUser")]
-    public async Task<IActionResult> GetUser(string id)
-    {
-        return HandleResult(await _userServices.GetUserAsync(id));
-    }
 
     [AllowAnonymous]
     [HttpPost("Login")]
-    public async Task<IActionResult> Login(string email, string password)
+    public async Task<IActionResult> Login(LoginDTO loginDTO)
     {
-        return HandleResult(await _userServices.LoginAsync(email,password));
+        return HandleResult(await _authenticateService.LoginAsync(loginDTO.Email,loginDTO.Password));
     }
 
     [AllowAnonymous]
-    [HttpGet("RefreshToken")]
-    public async Task<IActionResult> RefreshToken(string requestRefreshToken)
+    [HttpPost("RefreshToken")]
+    public async Task<IActionResult> RefreshToken([FromHeader(Name = "RefreshToken")] string refreshToken)
     {
-        return HandleResult(await _userServices.RefreshTokenAsync(requestRefreshToken));
+        return HandleResult(await _authenticateService.RefreshTokenAsync(refreshToken));
     }
-
 
 }

@@ -1,4 +1,3 @@
-using AutoMapper;
 using RepositoryLayer.Models;
 
 namespace RepositoryLayer.Mappers;

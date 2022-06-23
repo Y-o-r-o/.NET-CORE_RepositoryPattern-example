@@ -1,3 +1,4 @@
+using BusinessLayer.DTOs;
 using BusinessLayer.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,10 +16,10 @@ public class WeatherForecastController : BaseApiController
         _weatherServices = weatherServices;
     }
 
-    [HttpGet(Name = "GetWeatherForecast")]
-    public async Task<IActionResult> GetTemperature()
+    [HttpGet("Get")]
+    public async Task<IActionResult> GetTemperature(CordinatesDTO cordinates)
     {
-        return HandleResult(await _weatherServices.GetWeatherAsync("54.687156","25.279651"));
+        return HandleResult(await _weatherServices.GetWeatherAsync(cordinates.Latitude, cordinates.Longitude));
     }
 
 }

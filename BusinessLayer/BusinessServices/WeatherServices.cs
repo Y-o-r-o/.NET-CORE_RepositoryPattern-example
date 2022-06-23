@@ -1,7 +1,6 @@
 ﻿using BusinessLayer.DTOs;
 using BusinessLayer.Interfaces;
 using BusinessLayer.Mappers;
-using Core;
 using RepositoryLayer.Interfaces;
 
 namespace BusinessLayer.BusinessServices;

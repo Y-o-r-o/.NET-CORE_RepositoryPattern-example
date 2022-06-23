@@ -1,5 +1,3 @@
-using RepositoryLayer.Interfaces;
-using RepositoryLayer.RepositoryServices;
 using ServiceClientLayer.ServiceClients.OpenWeatherService;
 
 namespace API.Extensions;

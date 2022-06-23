@@ -1,11 +1,11 @@
 ﻿using BusinessLayer.DTOs;
-using RepositoryLayer.Databases.Entities;
-using System.Security.Claims;
 
 namespace BusinessLayer.Interfaces;
 
 
 public interface IAuthenticateService
 {
-    Task<AuthenticateResponseDTO> Authenticate(AppUser user);
+    public Task<AuthenticateResponseDTO> LoginAsync(string email, string password);
+    public Task<AuthenticateResponseDTO> RefreshTokenAsync(string requestRefreshToken);
+
 }

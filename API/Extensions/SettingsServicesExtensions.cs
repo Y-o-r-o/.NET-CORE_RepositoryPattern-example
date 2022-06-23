@@ -1,6 +1,4 @@
 using BusinessLayer.Settings;
-using Microsoft.EntityFrameworkCore;
-using RepositoryLayer.Databases.Configuration;
 using ServiceClientLayer;
 
 namespace API.Extensions;

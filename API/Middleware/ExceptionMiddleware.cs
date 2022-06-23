@@ -1,5 +1,5 @@
-using API.Extensions;
 using Core;
+using Core.Extensions;
 using System.Net;
 using System.Text.Json;
 
