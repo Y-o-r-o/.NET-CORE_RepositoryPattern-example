@@ -16,7 +16,7 @@ public class WeatherForecastController : BaseApiController
         _weatherServices = weatherServices;
     }
 
-    [HttpGet("Get")]
+    [HttpGet("GetTemperature")]
     public async Task<IActionResult> GetTemperature(CordinatesDTO cordinates)
     {
         return HandleResult(await _weatherServices.GetWeatherAsync(cordinates.Latitude, cordinates.Longitude));

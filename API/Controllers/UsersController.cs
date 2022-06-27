@@ -18,8 +18,8 @@ public class UsersController : BaseApiController
         _userServices = userServices;
     }
 
-    [HttpGet("GetUser")]
-    public async Task<IActionResult> GetUser(string id)
+    [HttpGet("Get")]
+    public async Task<IActionResult> Get(string id)
     {
         return HandleResult(await _userServices.GetUserAsync(id));
     }

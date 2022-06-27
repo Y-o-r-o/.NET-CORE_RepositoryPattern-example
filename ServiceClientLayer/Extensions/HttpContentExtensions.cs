@@ -1,3 +1,5 @@
+using Core;
+using Newtonsoft.Json.Serialization;
 using System.Text.Json;
 
 namespace ServiceClientLayer.Extensions
@@ -8,7 +10,8 @@ namespace ServiceClientLayer.Extensions
         {
             var options = new JsonSerializerOptions
             {
-                PropertyNameCaseInsensitive = true
+                PropertyNameCaseInsensitive = true,
+                PropertyNamingPolicy = SnakeCaseNamingPolicy.Instance
             };
             var contentStream = await content.ReadAsStreamAsync();
             return await JsonSerializer.DeserializeAsync<T>(contentStream, options);

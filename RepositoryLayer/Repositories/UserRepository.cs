@@ -31,7 +31,6 @@ public class UserRepository : IUserRepository
 
     public async Task<SignInResult> SignInUserByPasswordAsync(AppUser user, string password)
     {
-
         return await _signInManager.CheckPasswordSignInAsync(user, password, false);
     }
 
