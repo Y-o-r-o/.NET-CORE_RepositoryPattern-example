@@ -8,7 +8,6 @@ namespace API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class AuthenticationController : BaseApiController
 {
 
@@ -19,15 +18,12 @@ public class AuthenticationController : BaseApiController
         _authenticateService = authenticateService;
     }
 
-
-    [AllowAnonymous]
     [HttpPost("Login")]
     public async Task<IActionResult> Login(LoginDTO loginDTO)
     {
         return HandleResult(await _authenticateService.LoginAsync(loginDTO.Email,loginDTO.Password));
     }
 
-    [AllowAnonymous]
     [HttpPost("RefreshToken")]
     public async Task<IActionResult> RefreshToken([FromHeader(Name = "RefreshToken")] string refreshToken)
     {

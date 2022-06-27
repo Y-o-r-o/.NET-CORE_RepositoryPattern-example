@@ -7,6 +7,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using RepositoryLayer.Repositories;
+using Core.Extensions;
 
 namespace BusinessLayer.BusinessServices;
 
@@ -57,36 +58,17 @@ public class RefreshTokenService : IRefreshTokenService
 
     public async Task<RefreshToken> GetRefreshToken(string requestRefreshToken)
     {
-       return await _refreshTokenRepository.GetRefreshTokenByRequestRefreshToken(requestRefreshToken);
+        return await _refreshTokenRepository.GetRefreshTokenByRequestRefreshToken(requestRefreshToken);
     }
 
-    public async Task RemoveRefreshToken(RefreshToken refreshToken) 
+    public async Task RemoveRefreshToken(RefreshToken refreshToken)
     {
         await _refreshTokenRepository.RemoveRefreshToken(refreshToken);
     }
 
     public bool Validate(string refreshToken)
     {
-        var validationParameters = new TokenValidationParameters
-        {
-            ValidateIssuerSigningKey = true,
-            ValidateLifetime = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.RefreshTokenKey)),
-            ValidateIssuer = false,
-            ValidateAudience = false
-        };
-
-        JwtSecurityTokenHandler jwtSecurityTokenHandler = new();
-        try
-        {
-            jwtSecurityTokenHandler.ValidateToken(refreshToken, validationParameters,
-                out SecurityToken validatedToken);
-            return true;
-        }
-        catch (Exception)
-        {
-            return false;
-        }
+        return new JwtSecurityTokenHandler().ValidateToken(refreshToken, _jwtSettings.TokenValidationParameters);
     }
 }
 
