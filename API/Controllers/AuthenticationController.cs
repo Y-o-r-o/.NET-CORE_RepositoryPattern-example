@@ -1,7 +1,5 @@
 ﻿using BusinessLayer.DTOs;
 using BusinessLayer.Interfaces;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -19,7 +17,7 @@ public class AuthenticationController : BaseApiController
     }
 
     [HttpPost("Login")]
-    public async Task<IActionResult> Login(LoginDTO loginDTO)
+    public async Task<IActionResult> Login([FromBody]LoginDTO loginDTO)
     {
         return HandleResult(await _authenticateService.LoginAsync(loginDTO.Email,loginDTO.Password));
     }

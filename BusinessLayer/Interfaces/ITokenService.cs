@@ -9,7 +9,7 @@ public interface ITokenService
 
 public interface IRefreshTokenService : ITokenService
 {
-    public bool Validate(string refreshToken);
+    public void Validate(string refreshToken);
     public Task<RefreshToken> GetRefreshToken(string requestRefreshToken);
     public Task RemoveRefreshToken(RefreshToken refreshToken);
 }

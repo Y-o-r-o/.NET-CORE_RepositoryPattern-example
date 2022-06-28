@@ -1,11 +1,9 @@
 ﻿using BusinessLayer.Interfaces;
 using BusinessLayer.Settings;
 using Core;
-using Microsoft.IdentityModel.Tokens;
 using RepositoryLayer.Databases.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text;
 using RepositoryLayer.Repositories;
 using Core.Extensions;
 
@@ -15,13 +13,13 @@ namespace BusinessLayer.BusinessServices;
 
 public class AccessTokenService : IAccessTokenService
 {
-    private readonly ITokenGenerator _tokenGenerator;
+    private readonly JwtSecurityTokenHandler _jwtSecurityTokenHandler;
     private readonly JwtSettings _jwtSettings;
 
-    public AccessTokenService(ITokenGenerator tokenGenerator, JwtSettings jwtSettings)
+    public AccessTokenService(JwtSettings jwtSettings, JwtSecurityTokenHandler jwtSecurityTokenHandler)
     {
-        _tokenGenerator = tokenGenerator;
         _jwtSettings = jwtSettings;
+        _jwtSecurityTokenHandler = jwtSecurityTokenHandler;
     }
 
     public Task<string> Generate(AppUser user)
@@ -32,26 +30,27 @@ public class AccessTokenService : IAccessTokenService
             new Claim(ClaimTypes.Email, user.Email),
             new Claim(ClaimTypes.Name, user.UserName),
         };
-        return Task.FromResult(_tokenGenerator.Generate(_jwtSettings.TokenKey, _jwtSettings.TokenValidityInMinutes, claims));
+        return Task.FromResult(_jwtSecurityTokenHandler.GenerateToken(_jwtSettings.TokenKey, _jwtSettings.TokenValidityInMinutes, claims));
     }
 }
 
+
 public class RefreshTokenService : IRefreshTokenService
 {
-    private readonly ITokenGenerator _tokenGenerator;
     private readonly IRefreshTokenRepository _refreshTokenRepository;
+    private readonly JwtSecurityTokenHandler _jwtSecurityTokenHandler;
     private readonly JwtSettings _jwtSettings;
 
-    public RefreshTokenService(ITokenGenerator tokenGenerator, JwtSettings jwtSettings, IRefreshTokenRepository refreshTokenRepository)
+    public RefreshTokenService(JwtSettings jwtSettings, IRefreshTokenRepository refreshTokenRepository, JwtSecurityTokenHandler jwtSecurityTokenHandler)
     {
-        _tokenGenerator = tokenGenerator;
         _refreshTokenRepository = refreshTokenRepository;
         _jwtSettings = jwtSettings;
+        _jwtSecurityTokenHandler = jwtSecurityTokenHandler;
     }
 
     public async Task<string> Generate(AppUser user)
     {
-        var refreshToken = _tokenGenerator.Generate(_jwtSettings.RefreshTokenKey, _jwtSettings.RefreshTokenValidityInMinutes);
+        var refreshToken = _jwtSecurityTokenHandler.GenerateToken(_jwtSettings.RefreshTokenKey, _jwtSettings.RefreshTokenValidityInMinutes);
         await _refreshTokenRepository.AddRefreshToken(refreshToken, user.Id);
         return refreshToken;
     }
@@ -66,9 +65,9 @@ public class RefreshTokenService : IRefreshTokenService
         await _refreshTokenRepository.RemoveRefreshToken(refreshToken);
     }
 
-    public bool Validate(string refreshToken)
+    public void Validate(string refreshToken)
     {
-        return new JwtSecurityTokenHandler().ValidateToken(refreshToken, _jwtSettings.TokenValidationParameters);
+        _jwtSecurityTokenHandler.ValidateToken(refreshToken, _jwtSettings.TokenValidationParameters);
     }
-}
 
+}

@@ -11,7 +11,7 @@ public class UserServices : IUserServices
     private readonly IUserRepository _userRepository;
 
 
-    public UserServices(IUserRepository userRepository, IAuthenticateService authenticateService, IRefreshTokenService refreshTokenService, IRefreshTokenRepository refreshTokenRepository) 
+    public UserServices(IUserRepository userRepository) 
     {
         _userRepository = userRepository;
     }

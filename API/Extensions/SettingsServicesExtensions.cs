@@ -13,11 +13,11 @@ public static class SettingsServicesExtensions
         config.Bind(nameof(JwtSettings), jwtSettings);
         jwtSettings.TokenValidationParameters = new TokenValidationParameters
         {
-            ValidateIssuerSigningKey = config.GetValue<bool>("JwtValidationSettings:ValidateIssuerSigningKey"),
-            ValidateLifetime = config.GetValue<bool>("JwtValidationSettings:ValidateLifetime"),
+            ValidateIssuerSigningKey = config.GetValue<bool>("JwtSettings:JwtValidationSettings:ValidateIssuerSigningKey"),
+            ValidateLifetime = config.GetValue<bool>("JwtSettings:JwtValidationSettings:ValidateLifetime"),
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.RefreshTokenKey)),
-            ValidateIssuer = config.GetValue<bool>("JwtValidationSettings:ValidateIssuer"),
-            ValidateAudience = config.GetValue<bool>("JwtValidationSettings:ValidateAudience")
+            ValidateIssuer = config.GetValue<bool>("JwtSettings:JwtValidationSettings:ValidateIssuer"),
+            ValidateAudience = config.GetValue<bool>("JwtSettings:JwtValidationSettings:ValidateAudience")
         };
         services.AddSingleton(jwtSettings);
 

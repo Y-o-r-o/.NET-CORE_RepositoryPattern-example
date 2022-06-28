@@ -2,6 +2,8 @@
 using BusinessLayer.Interfaces;
 using RepositoryLayer.Databases.Entities;
 using RepositoryLayer.Interfaces;
+using System.Net;
+using System.Web.Http;
 
 namespace BusinessLayer.BusinessServices;
 public class AuthenticateService : IAuthenticateService
@@ -21,16 +23,14 @@ public class AuthenticateService : IAuthenticateService
     {
         var user = await _userRepository.GetUserByEmailAsync(email);
         var signInResult = await _userRepository.SignInUserByPasswordAsync(user, password);
-        if (!signInResult.Succeeded) throw new Exception("Login failure"); //TO DO: implement login exception.
+        if (!signInResult.Succeeded) throw new HttpResponseException(HttpStatusCode.Unauthorized);
         return await Authenticate(user);
     }
 
     public async Task<AuthenticateResponseDTO> RefreshTokenAsync(string requestRefreshToken)
     {
-        var isValidRefreshToken = _refreshTokenService.Validate(requestRefreshToken);
-        if (!isValidRefreshToken)
-            throw new Exception("Invalid refresh token."); //TO DO: implement bad token exception
-
+        _refreshTokenService.Validate(requestRefreshToken);
+        
         var refreshToken = await _refreshTokenService.GetRefreshToken(requestRefreshToken);
         await _refreshTokenService.RemoveRefreshToken(refreshToken);
 

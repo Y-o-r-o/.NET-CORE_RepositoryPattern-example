@@ -6,9 +6,11 @@ public static class ExeptionExtensions
 {
     public static AdditionalInformation AnalyzeExeption(this Exception ex)
     {
+        
         var trace = new StackTrace(ex, true);
-        var stackFrame = trace.GetFrame(0);
-        var reflectedType = trace.GetFrame(0).GetMethod().ReflectedType;
+        
+        var stackFrame = trace.GeFirstFrame();
+        var reflectedType = trace.GeFirstFrame().GetMethod().ReflectedType;
         var additionalInformation = new AdditionalInformation();
         if (reflectedType != null)
         {

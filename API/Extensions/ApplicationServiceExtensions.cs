@@ -16,9 +16,9 @@ public static class ApplicationServiceExtensions
         services.AddEndpointsApiExplorer()
                 .AddSwaggerGen();
 
-        services.AddServiceClientServices();
-        services.AddRepositoryServices();
-        services.AddBusinessServices();
+        services.AddServiceClientServices()
+                .AddRepositoryServices()
+                .AddBusinessServices();
 
         services.AddIdentityServices(config);
 

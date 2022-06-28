@@ -11,7 +11,11 @@ public static class WebApplicationExtensions
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
-            app.UseSwaggerUI();
+            app.UseSwaggerUI(swaggerUiOptions =>
+            {
+                swaggerUiOptions.UseResponseInterceptor("(res) => console.log('test test test test test test')");
+                swaggerUiOptions.UseRequestInterceptor("(req) => { req.headers['Authorization'] = 'Bearer ' + window?.swaggerUIRedirectOauth2?.auth?.token?.id_token; return req; }");
+            });
         }
 
         app.UseHttpsRedirection();
