@@ -3,23 +3,23 @@ namespace ServiceClientLayer.Models;
 public class WeatherForecast
 {
 
-    public Coord Coord { get; set; } = new Coord();
+    public Coord Coord { get; set; } = new ();
 
-    public List<Weather> Weather { get; set; } 
+    public List<Weather> Weather { get; set; } = new();
 
     public string Base { get; set; }
 
-    public MainForecast Main { get; set; }
+    public MainForecast Main { get; set; } = new();
 
-    public int Visibility { get; set; }
+    public int Visibility { get; set; } = new();
 
-    public Wind Wind { get; set; }
+    public Wind Wind { get; set; } = new();
 
-    public Clouds Clouds { get; set; }
+    public Clouds Clouds { get; set; } = new();
 
     public int Dt { get; set; }
 
-    public Sys Sys { get; set; }
+    public Sys Sys { get; set; } = new();
 
     public int Timezone { get; set; }
 

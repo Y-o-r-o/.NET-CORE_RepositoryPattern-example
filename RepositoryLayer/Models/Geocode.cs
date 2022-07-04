@@ -8,7 +8,7 @@ namespace RepositoryLayer.Models;
 
 public class Geocode
 {
-    public List<Result> Results { get; set; }
+    public List<Result> Results { get; set; } = new();
     public string Status { get; set; }
 }
 
@@ -16,21 +16,21 @@ public class AddressComponent
 {
     public string LongName { get; set; }
     public string ShortName { get; set; }
-    public List<string> Types { get; set; }
+    public List<string> Types { get; set; } = new();
 }
 
 public class Bounds
 {
-    public Northeast Northeast { get; set; }
-    public Southwest Southwest { get; set; }
+    public Northeast Northeast { get; set; } = new();
+    public Southwest Southwest { get; set; } = new();
 }
 
 public class Geometry
 {
-    public Bounds Bounds { get; set; }
-    public Location Location { get; set; }
+    public Bounds Bounds { get; set; } = new();
+    public Location Location { get; set; } = new();
     public string LocationType { get; set; }
-    public Viewport Viewport { get; set; }
+    public Viewport Viewport { get; set; } = new();
 }
 
 public class Location
@@ -47,11 +47,11 @@ public class Northeast
 
 public class Result
 {
-    public List<AddressComponent> AddressComponents { get; set; }
+    public List<AddressComponent> AddressComponents { get; set; } = new();
     public string FormattedAddress { get; set; }
-    public Geometry Geometry { get; set; }
+    public Geometry Geometry { get; set; } = new();
     public string PlaceId { get; set; }
-    public List<string> Types { get; set; }
+    public List<string> Types { get; set; } = new();
 }
 
 public class Southwest
@@ -62,7 +62,7 @@ public class Southwest
 
 public class Viewport
 {
-    public Northeast Northeast { get; set; }
-    public Southwest Southwest { get; set; }
+    public Northeast Northeast { get; set; } = new();
+    public Southwest Southwest { get; set; } = new();
 }
 
