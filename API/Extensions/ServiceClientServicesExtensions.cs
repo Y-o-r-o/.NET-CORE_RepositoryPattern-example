@@ -10,6 +10,10 @@ public static class ServiceClientServicesExtensions
                 {
                     c.BaseAddress = new Uri("https://api.openweathermap.org");
                 });
+        services.AddHttpClient<IGoogleMapsServiceClient, GoogleMapsServiceClient>(c =>
+                {
+                    c.BaseAddress = new Uri("https://maps.googleapis.com");
+                });
         return services;
     }
 

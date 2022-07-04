@@ -1,6 +1,7 @@
-﻿using System.Diagnostics;
+﻿using Core.Extensions;
+using System.Diagnostics;
 
-namespace Core.Extensions;
+namespace API.Extensions;
 
 public static class ExeptionExtensions
 {

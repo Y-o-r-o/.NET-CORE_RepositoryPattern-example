@@ -1,6 +1,7 @@
 using BusinessLayer.DTOs;
 using BusinessLayer.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace API.Controllers;
 
@@ -16,10 +17,27 @@ public class WeatherForecastController : BaseApiController
         _weatherServices = weatherServices;
     }
 
-    [HttpGet("GetTemperature")]
-    public async Task<IActionResult> GetTemperature(CordinatesDTO cordinates)
+    /// <summary>Gets a temperature in celsius from cordinates.</summary>
+    /// <param name="latitude" example="54.687156">The cordinates of location.</param>
+    /// <param name="longtitude" example="25.279651">The cordinates of location.</param>
+    /// <returns>got temperature in celsius.</returns>
+    [HttpGet("GetTemperature/Cordinates")]
+    [ProducesResponseType(typeof(MainForecastDTO), 200)]
+    [ProducesResponseType(typeof(AppException), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> GetTemperature(string latitude, string longtitude)
     {
-        return HandleResult(await _weatherServices.GetWeatherAsync(cordinates.Latitude, cordinates.Longitude));
+        return HandleResult(await _weatherServices.GetWeatherAsync(latitude, longtitude));
+    }
+
+    /// <summary>Gets a temperature in celsius by city name.</summary>
+    /// <param name="city">The city.</param>
+    /// <returns>got temperature in celsius.</returns>
+    [HttpPost("GetTemperature/City")]
+    [ProducesResponseType(typeof(MainForecastDTO), 200)]
+    [ProducesResponseType(typeof(AppException), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> GetTemperature([Required]CityDTO city)
+    {
+        return HandleResult(await _weatherServices.GetWeatherAsync(city));
     }
 
 }

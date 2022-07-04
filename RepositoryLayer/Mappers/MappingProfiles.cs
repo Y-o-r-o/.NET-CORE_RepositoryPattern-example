@@ -55,4 +55,58 @@ public static class MappingProfiles
             Cod = from.Cod
         };
     }
+    public static Geocode Map(ServiceClientLayer.Models.Geocode from)
+    {
+        return new Geocode
+        {
+            Results = from.Results.ConvertAll(fromResult => new Result
+            {
+                AddressComponents = fromResult.AddressComponents.ConvertAll(fromResultAddressComponent => new AddressComponent
+                {
+                    LongName = fromResultAddressComponent.LongName,
+                    ShortName = fromResultAddressComponent.ShortName,
+                    Types = fromResultAddressComponent.Types
+                }),
+                FormattedAddress = fromResult.FormattedAddress,
+                Geometry = new Geometry
+                {
+                    Bounds = new Bounds
+                    {
+                        Northeast = new Northeast
+                        {
+                            Lat = fromResult.Geometry.Bounds.Northeast.Lat,
+                            Lng = fromResult.Geometry.Bounds.Northeast.Lng
+                        },
+                        Southwest = new Southwest
+                        {
+                            Lat = fromResult.Geometry.Bounds.Southwest.Lat,
+                            Lng = fromResult.Geometry.Bounds.Southwest.Lng
+                        }
+                    },
+                    Location = new Location
+                    {
+                        Lat = fromResult.Geometry.Location.Lat,
+                        Lng = fromResult.Geometry.Location.Lng
+                    },
+                    LocationType = fromResult.Geometry.LocationType,
+                    Viewport = new Viewport
+                    {
+                        Northeast = new Northeast
+                        {
+                            Lat = fromResult.Geometry.Viewport.Northeast.Lat,
+                            Lng = fromResult.Geometry.Viewport.Northeast.Lng
+                        },
+                        Southwest = new Southwest
+                        {
+                            Lat = fromResult.Geometry.Viewport.Southwest.Lat,
+                            Lng = fromResult.Geometry.Viewport.Southwest.Lng
+                        }
+                    }
+                },
+                PlaceId = fromResult.PlaceId,
+                Types = fromResult.Types
+            }),
+            Status = from.Status
+        };
+    }
 }

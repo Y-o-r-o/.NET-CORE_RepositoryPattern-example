@@ -20,18 +20,11 @@ internal class Program
         using var scope = app.Services.CreateScope();
         var servicesProvider = scope.ServiceProvider;
 
-        try
-        {
-            var context = servicesProvider.GetRequiredService<DataContext>();
-            var userManager = servicesProvider.GetRequiredService<UserManager<AppUser>>();
-            await context.Database.MigrateAsync();
-            await Seed.SeedData(context, userManager);
-        }
-        catch (Exception ex)
-        {
-            var logger = servicesProvider.GetRequiredService<ILogger<Program>>();
-            logger.LogError(ex, "An error occured during migration");
-        }
+        var context = servicesProvider.GetRequiredService<DataContext>();
+        var userManager = servicesProvider.GetRequiredService<UserManager<AppUser>>();
+        await context.Database.MigrateAsync();
+        await Seed.SeedData(context, userManager);
+
 
         app.Configure();
 

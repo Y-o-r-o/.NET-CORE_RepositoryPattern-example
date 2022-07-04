@@ -6,4 +6,6 @@ namespace BusinessLayer.Interfaces;
 public interface IWeatherServices
 {
     public Task<MainForecastDTO> GetWeatherAsync(ValidString latitude, ValidString longtitude);
+    
+    public Task<MainForecastDTO> GetWeatherAsync(CityDTO city);
 }

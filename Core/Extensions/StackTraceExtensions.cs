@@ -8,7 +8,8 @@ public static class StackTraceExtensions
     {
         foreach(StackFrame stackFrame in stackTrace.GetFrames())
         {
-            if (!stackFrame.GetMethod().IsDefined(typeof(StackTraceHiddenAttribute), true))
+            bool marked = stackFrame.GetMethod().DeclaringType.CustomAttributes.Any(ca => ca.AttributeType == typeof(StackTraceHiddenAttribute));
+            if (!marked)
             {
                 return stackFrame;
             }

@@ -1,5 +1,12 @@
+using API.Controllers;
+using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using RepositoryLayer.Databases.Configuration;
+using Swashbuckle.AspNetCore.Filters;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace API.Extensions;
 
@@ -12,9 +19,53 @@ public static class ApplicationServiceExtensions
 
         services.AddDbContext<DataContext>(options => options.UseSqlServer(config.GetConnectionString("Context")));
 
-        // Learn more about configuzring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer()
-                .AddSwaggerGen();
+                .AddSwaggerGen(config =>
+                {
+                    config.SwaggerDoc("v1",
+                        new OpenApiInfo
+                        {
+                            Title = "OrionTraining API - V1",
+                            Version = "v1"
+                        });
+                    var apiDocumentationPath = Path.Combine(AppContext.BaseDirectory, "API.xml");
+                    config.IncludeXmlComments(apiDocumentationPath);
+                    var businesLayerDocumentationPath = Path.Combine(AppContext.BaseDirectory, "BusinessLayer.xml");
+                    config.IncludeXmlComments(businesLayerDocumentationPath);
+
+                    config.SchemaFilter<EnumSchemaFilter>();
+
+                    config.AddSecurityDefinition("access", new OpenApiSecurityScheme()
+                    {
+                        Description = "Access token",
+                        Name = "Authorization",
+                        In = ParameterLocation.Header,
+                        Type = SecuritySchemeType.Http,
+                        BearerFormat = "JWT",
+                        Scheme = "Bearer"
+                    });
+
+                    config.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                    {
+                        {
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = "access"
+                                }
+                            },
+                            new string[]{}        
+                        }
+                    });
+
+
+                });
+        services.AddSwaggerExamplesFromAssemblies(typeof(UsersController).Assembly);
+
+
+
 
         services.AddServiceClientServices()
                 .AddRepositoryServices()

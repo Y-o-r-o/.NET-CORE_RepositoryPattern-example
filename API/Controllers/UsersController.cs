@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.BusinessServices;
+using BusinessLayer.DTOs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +19,12 @@ public class UsersController : BaseApiController
         _userServices = userServices;
     }
 
+    /// <summary>Gets a user by id.</summary>
+    /// <param name="id" example="2ecb003d-5f09-4f81-82f7-ee7388165432">The id of user.</param>
+    /// <returns>got user.</returns>
     [HttpGet("Get")]
+    [ProducesResponseType(typeof(UserDTO), 200)]
+    [ProducesResponseType(typeof(AppException), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Get(string id)
     {
         return HandleResult(await _userServices.GetUserAsync(id));

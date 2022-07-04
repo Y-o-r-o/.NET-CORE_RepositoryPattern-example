@@ -10,7 +10,6 @@ public class WeatherForecastRepository : IWeatherForecastRepository
 
     private IOpenWeatherServiceClient _openWeatherServiceClient;
 
-
     public WeatherForecastRepository(IOpenWeatherServiceClient openWeatherServiceClient)
     {
         _openWeatherServiceClient = openWeatherServiceClient;

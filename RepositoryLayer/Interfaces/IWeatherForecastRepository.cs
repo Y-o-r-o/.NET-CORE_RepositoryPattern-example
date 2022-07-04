@@ -4,6 +4,5 @@ namespace RepositoryLayer.Interfaces;
 
 public interface IWeatherForecastRepository
 {
-     public Task<MainForecast> GetWeatherAsync(string latitude, string longtitude);
-
+    public Task<MainForecast> GetWeatherAsync(string latitude, string longtitude);
 }

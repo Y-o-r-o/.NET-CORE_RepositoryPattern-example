@@ -1,6 +1,7 @@
 using BusinessLayer.Settings;
 using Microsoft.IdentityModel.Tokens;
 using ServiceClientLayer;
+using ServiceClientLayer.ServiceClients.GoogleMapsService;
 using System.Text;
 
 namespace API.Extensions;
@@ -23,7 +24,11 @@ public static class SettingsServicesExtensions
 
         var openWeatherMapSettings = new OpenWeatherMapSettings();
         config.Bind(nameof(OpenWeatherMapSettings), openWeatherMapSettings);
-        services.AddSingleton(openWeatherMapSettings);
+        services.AddSingleton(openWeatherMapSettings); 
+        
+        var googleMapsSettings = new GoogleMapsSettings();
+        config.Bind(nameof(GoogleMapsSettings), googleMapsSettings);
+        services.AddSingleton(googleMapsSettings);
 
         return services;
     }

@@ -3,9 +3,9 @@ namespace ServiceClientLayer.Models;
 public class WeatherForecast
 {
 
-    public Coord Coord { get; set; }
+    public Coord Coord { get; set; } = new Coord();
 
-    public List<Weather> Weather { get; set; }
+    public List<Weather> Weather { get; set; } 
 
     public string Base { get; set; }
 

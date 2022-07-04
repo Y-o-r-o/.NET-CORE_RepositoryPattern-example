@@ -2,18 +2,17 @@
 
 namespace Core;
 
+[StackTraceHidden]
 public class ValidString
 {
     private string _value;
 
-    [StackTraceHidden]
     public ValidString(string value)
     {
         Validate(value);
         _value = value;
     }
 
-    [StackTraceHidden]
     private void Validate(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
@@ -22,7 +21,6 @@ public class ValidString
         }
     }
 
-    [StackTraceHidden]
     public static implicit operator ValidString(string value)
     {
         if (value == null)
