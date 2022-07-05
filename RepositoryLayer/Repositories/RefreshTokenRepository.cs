@@ -1,35 +1,23 @@
-﻿using Microsoft.EntityFrameworkCore;
-using RepositoryLayer.Databases.Configuration;
+﻿using RepositoryLayer.Databases.Configuration;
 using RepositoryLayer.Databases.Entities;
+using RepositoryLayer.Repositories.Base;
 
 namespace RepositoryLayer.Repositories;
-public class RefreshTokenRepository : IRefreshTokenRepository
+internal class RefreshTokenRepository : ContextRepositoryBase<RefreshToken>, IRefreshTokenRepository
 {
-    private DataContext _context;
 
-    public RefreshTokenRepository(DataContext context)
+    public RefreshTokenRepository(DataContext context) : base(context)
     {
-        _context = context;
+        Entities = context.Set<RefreshToken>();
     }
 
-    public async Task<RefreshToken> GetRefreshTokenByRequestRefreshToken(string requestRefreshToken)
-    {
-        return await _context.RefreshTokens.FirstOrDefaultAsync(x => x.Token == requestRefreshToken);
-    }
+    public async Task<RefreshToken?> GetRefreshTokenByRequestRefreshToken(string requestRefreshToken)
+        => await GetAsync(t => t.Token == requestRefreshToken);
 
     public async Task RemoveRefreshToken(RefreshToken refreshToken)
-    {
-        _context.RefreshTokens.Remove(refreshToken);
-        await _context.SaveChangesAsync();
-    }
+        => await RemoveAsync(refreshToken);
 
     public async Task AddRefreshToken(string refreshToken, string userId)
-    {
-        await _context.RefreshTokens.AddAsync(new RefreshToken()
-        {
-            UserId = userId,
-            Token = refreshToken
-        });
-        await _context.SaveChangesAsync();
-    }
+        => await RemoveAsync(new RefreshToken() { UserId = userId, Token = refreshToken });
+
 }

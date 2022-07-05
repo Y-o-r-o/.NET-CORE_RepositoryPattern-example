@@ -1,44 +1,29 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using RepositoryLayer.Databases.Configuration;
 using RepositoryLayer.Databases.Entities;
 using RepositoryLayer.Interfaces;
+using RepositoryLayer.Repositories.Base;
 
 namespace RepositoryLayer.Repositories;
 
-public class UserRepository : IUserRepository
+internal class UserRepository : ContextRepositoryBase<AppUser>, IUserRepository
 {
-    private readonly UserManager<AppUser> _userManager;
     private readonly SignInManager<AppUser> _signInManager;
 
-
-    public UserRepository(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+    public UserRepository(DataContext context, SignInManager<AppUser> signInManager) : base(context)
     {
-        _userManager = userManager;
         _signInManager = signInManager;
+
+        Entities = context.Set<AppUser>();
     }
 
+    public async Task<AppUser?> GetUserByIdAsync(string id)
+        => await GetAsync(u => u.Id == id);
 
-    public async Task<AppUser> GetUserByIdAsync(string id)
-    {
-        var user = HandleUserResult(await _userManager.FindByIdAsync(id));
-        return user;
-    }
+    public async Task<AppUser?> GetUserByEmailAsync(string email)
+        => await GetAsync(u => u.Email == email);
 
-    public async Task<AppUser> GetUserByEmailAsync(string email)
-    {
-        var user = HandleUserResult(await _userManager.FindByEmailAsync(email));
-        return user;
-    }
-
-    public async Task<SignInResult> SignInUserByPasswordAsync(AppUser user, string password)
-    {
-        return await _signInManager.CheckPasswordSignInAsync(user, password, false);
-    }
-
-
-    private AppUser HandleUserResult(AppUser user) 
-    {
-        if (user is null) throw new Exception("Bad credentials"); //TO DO: implement bad credentials exception.
-        return user;
-    }
+    public async Task<SignInResult?> SignInUserByPasswordAsync(AppUser user, string password)
+        => await _signInManager.CheckPasswordSignInAsync(user, password, false);
 
 }

@@ -8,23 +8,23 @@ namespace BusinessLayer.BusinessServices;
 
 public class WeatherServices : IWeatherServices
 {
-    private IWeatherForecastRepository _weatherForecastRepository;
-    private IGoogleMapsRepository _googleMapsRepository;
+    private IMainForecastRepository _weatherForecastRepository;
+    private ILocationRepository _googleMapsRepository;
 
-    public WeatherServices(IWeatherForecastRepository weatherForecastRepository, IGoogleMapsRepository googleMapsRepository)
+    public WeatherServices(IMainForecastRepository weatherForecastRepository, ILocationRepository googleMapsRepository)
     {
         _weatherForecastRepository = weatherForecastRepository;
         _googleMapsRepository = googleMapsRepository;
     }
 
-    public async Task<MainForecastDTO> GetWeatherAsync(ValidString latitude, ValidString longtitude)
+    public async Task<MainForecastDTO> GetWeatherAsync(double latitude, double longtitude)
     {
         return MappingProfiles.Map(await _weatherForecastRepository.GetWeatherAsync(latitude, longtitude));
     }
 
     public async Task<MainForecastDTO> GetWeatherAsync(CityDTO city)
     {
-        var cordinates = await _googleMapsRepository.GetCordinates(city.ToString());
-        return MappingProfiles.Map(await _weatherForecastRepository.GetWeatherAsync(cordinates.Lat.ToString(), cordinates.Lng.ToString()));
+        var cordinates = await _googleMapsRepository.GetLocationByCityName("Vilnius"); //city.ToString()
+        return MappingProfiles.Map(await _weatherForecastRepository.GetWeatherAsync(cordinates.Lat, cordinates.Lng));
     }
 }

@@ -21,7 +21,6 @@ public class DataContext : IdentityDbContext<AppUser>
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-       
     }
 
 }

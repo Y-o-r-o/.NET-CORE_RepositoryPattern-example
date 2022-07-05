@@ -5,5 +5,5 @@ namespace ServiceClientLayer.ServiceClients.OpenWeatherService;
 
 public interface IOpenWeatherServiceClient
 {
-    public Task<Result<WeatherForecast>> GetTemperature(string latitude, string longtitude);
+    public Task<Result<WeatherForecast>> GetTemperature(double latitude, double longtitude);
 }

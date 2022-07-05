@@ -1,13 +1,16 @@
 ﻿using BusinessLayer.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using RepositoryLayer.Databases.Configuration;
 using RepositoryLayer.Databases.Entities;
+using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
 
-namespace API.Extensions;
+namespace BusinessLayer.BusinessServices.DependencyInjections;
 
 public static class IdentityServicesExtensions
 {
@@ -36,6 +39,7 @@ public static class IdentityServicesExtensions
                     ClockSkew = TimeSpan.Zero
                 };
             });
+        services.AddSingleton<JwtSecurityTokenHandler>();
 
         return services;
     }

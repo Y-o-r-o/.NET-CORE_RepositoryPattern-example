@@ -1,12 +1,12 @@
 using API.Controllers;
-using Microsoft.AspNetCore.Http.Json;
+using BusinessLayer.BusinessServices.DependencyInjections;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using RepositoryLayer.Databases.Configuration;
+using RepositoryLayer.Repositories.DependencyInjections;
+using ServiceClientLayer.DependencyInjections;
 using Swashbuckle.AspNetCore.Filters;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+
 
 namespace API.Extensions;
 
@@ -63,8 +63,6 @@ public static class ApplicationServiceExtensions
 
                 });
         services.AddSwaggerExamplesFromAssemblies(typeof(UsersController).Assembly);
-
-
 
 
         services.AddServiceClientServices()

@@ -24,7 +24,7 @@ public class WeatherForecastController : BaseApiController
     [HttpGet("GetTemperature/Cordinates")]
     [ProducesResponseType(typeof(MainForecastDTO), 200)]
     [ProducesResponseType(typeof(AppException), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetTemperature(string latitude, string longtitude)
+    public async Task<IActionResult> GetTemperature([Range(typeof(double), "-90", "90")]double latitude, [Range(typeof(double), "-180", "180")] double longtitude)
     {
         return HandleResult(await _weatherServices.GetWeatherAsync(latitude, longtitude));
     }
@@ -35,9 +35,9 @@ public class WeatherForecastController : BaseApiController
     [HttpPost("GetTemperature/City")]
     [ProducesResponseType(typeof(MainForecastDTO), 200)]
     [ProducesResponseType(typeof(AppException), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetTemperature([Required]CityDTO city)
+    public async Task<IActionResult> GetTemperature(/*[Required]CityDTO city*/)
     {
-        return HandleResult(await _weatherServices.GetWeatherAsync(city));
+        return HandleResult(await _weatherServices.GetWeatherAsync(CityDTO.Vilnius));
     }
 
 }
