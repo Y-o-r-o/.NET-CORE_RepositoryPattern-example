@@ -25,7 +25,6 @@ internal abstract class ServiceClientRepositoryBase<TEntity> where TEntity : cla
 
         if (response.IsSuccess)
         {
-
             entity = MappingProfiles.TryMap<TServiceClientEntity, TEntity>(response.Value);
         }
 

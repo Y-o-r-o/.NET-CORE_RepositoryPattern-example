@@ -13,14 +13,17 @@ public class MappingProfiles
     where TResult : new()
     where TSource : class, new()
     {
+        //Trying to get mapper for result.
         var resultMapper = typeof(MappingProfiles).GetMethods().FirstOrDefault(m =>
             m.ReturnType == typeof(TResult) &&
             m.GetParameters()[0].ParameterType == typeof(TSource));
         if (resultMapper is null)
             throw new Exception($"Mapper not found. From: {typeof(TSource)}, to: {typeof(TResult)}");
-
+        
+        //Makes TSource array, because Invoke method works only with arrays.
         TSource[] sources = new TSource[] { source };
 
+        //Calls manual mapping method.
         object res = resultMapper.Invoke(MappingProfiles.Instance, sources);
 
         return (TResult)res;

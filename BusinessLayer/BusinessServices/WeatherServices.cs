@@ -1,7 +1,6 @@
 ﻿using BusinessLayer.DTOs;
 using BusinessLayer.Interfaces;
 using BusinessLayer.Mappers;
-using Core;
 using RepositoryLayer.Interfaces;
 
 namespace BusinessLayer.BusinessServices;
@@ -22,8 +21,7 @@ public class WeatherServices : IWeatherServices
 
     public async Task<MainForecastDTO> GetWeatherAsync(CityDTO city)
     {
-        var goecode = await _googleMapsRepository.GetGeocodeByCityName("Vilnius"); //city.ToString()
-        var cordinates = goecode.Results[0].Geometry.Location;
-        return MappingProfiles.Map((await _weatherForecastRepository.GetWeatherAsync(cordinates.Lat, cordinates.Lng)).Main);
+        var location = MappingProfiles.Map(await _googleMapsRepository.GetGeocodeByCityName(city.ToString()));
+        return MappingProfiles.Map((await _weatherForecastRepository.GetWeatherAsync(location.Lat, location.Lng)).Main);
     }
 }

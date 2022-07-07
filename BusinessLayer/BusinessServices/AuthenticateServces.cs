@@ -40,12 +40,10 @@ public class AuthenticateService : IAuthenticateService
     }
 
     private async Task<AuthenticateResponseDTO> Authenticate(AppUser user)
-    {
-        return new AuthenticateResponseDTO
+        => new AuthenticateResponseDTO
         {
             AccessToken = await _accessTokenService.Generate(user),
             RefreshToken = await _refreshTokenService.Generate(user)
         };
-    }
 
 }

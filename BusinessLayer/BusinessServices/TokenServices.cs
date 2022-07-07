@@ -55,18 +55,14 @@ public class RefreshTokenService : IRefreshTokenService
     }
 
     public async Task<RefreshToken> GetRefreshToken(string requestRefreshToken)
-    {
-        return await _refreshTokenRepository.GetRefreshTokenByRequestRefreshToken(requestRefreshToken);
-    }
+        => await _refreshTokenRepository.GetRefreshTokenByRequestRefreshToken(requestRefreshToken);
 
     public async Task RemoveRefreshToken(RefreshToken refreshToken)
-    {
-        await _refreshTokenRepository.RemoveRefreshToken(refreshToken);
-    }
+        =>  await _refreshTokenRepository.RemoveRefreshToken(refreshToken);
+    
 
     public void Validate(string refreshToken)
-    {
-        _jwtSecurityTokenHandler.ValidateToken(refreshToken, _jwtSettings.TokenValidationParameters);
-    }
+        => _jwtSecurityTokenHandler.ValidateToken(refreshToken, _jwtSettings.TokenValidationParameters);
+
 
 }
