@@ -13,8 +13,6 @@ internal class UserRepository : ContextRepositoryBase<AppUser>, IUserRepository
     public UserRepository(DataContext context, SignInManager<AppUser> signInManager) : base(context)
     {
         _signInManager = signInManager;
-
-        Entities = context.Set<AppUser>();
     }
 
     public async Task<AppUser?> GetUserByIdAsync(string id)
@@ -23,7 +21,13 @@ internal class UserRepository : ContextRepositoryBase<AppUser>, IUserRepository
     public async Task<AppUser?> GetUserByEmailAsync(string email)
         => await GetAsync(u => u.Email == email);
 
-    public async Task<SignInResult?> SignInUserByPasswordAsync(AppUser user, string password)
-        => await _signInManager.CheckPasswordSignInAsync(user, password, false);
+    public async Task<IEnumerable<AppUser>> GetUsersAsync()
+        => await GetAllAsync();
 
+    public async Task<SignInResult?> SignInUserByPasswordAsync(AppUser user, string password)
+    {
+        var res = await _signInManager.CheckPasswordSignInAsync(user, password, false);
+        await _context.SaveChangesAsync();
+        return res;
+    }
 }

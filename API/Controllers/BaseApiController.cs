@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Web.Http.Controllers;
-using System.Web.Http.Filters;
 
 namespace API.Controllers;
 

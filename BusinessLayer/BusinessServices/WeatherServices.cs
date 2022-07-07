@@ -16,8 +16,8 @@ public class WeatherServices : IWeatherServices
         _googleMapsRepository = googleMapsRepository;
     }
 
-    public async Task<MainForecastDTO> GetWeatherAsync(double latitude, double longtitude)
-        => MappingProfiles.Map((await _weatherForecastRepository.GetWeatherAsync(latitude, longtitude)).Main);
+    public async Task<MainForecastDTO> GetWeatherAsync(CordinatesDTO cordinates)
+        => MappingProfiles.Map((await _weatherForecastRepository.GetWeatherAsync(cordinates.Latitude, cordinates.Longitude)).Main);
 
     public async Task<MainForecastDTO> GetWeatherAsync(CityDTO city)
     {

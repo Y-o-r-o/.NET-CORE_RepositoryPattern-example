@@ -1,5 +1,7 @@
 ﻿using BusinessLayer.DTOs;
 using BusinessLayer.Interfaces;
+using BusinessLayer.Mappers;
+using RepositoryLayer.Databases.Entities;
 using RepositoryLayer.Interfaces;
 using RepositoryLayer.Repositories;
 
@@ -25,6 +27,17 @@ public class UserServices : IUserServices
             DisplayName = user.DisplayName,
             Bio = user.Bio
         };
+    }
+
+    public async Task<IEnumerable<UserDTO>> GetUsersAsync()
+    {
+        var users = await _userRepository.GetUsersAsync();
+        List<UserDTO> mapped = new();
+        foreach (AppUser user in users)
+        {
+            mapped.Add(MappingProfiles.Map(user));
+        }
+        return mapped;
     }
 
 

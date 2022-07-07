@@ -30,7 +30,7 @@ public class AuthenticationController : BaseApiController
     /// <summary>Gives user new access token and refresh token.</summary>
     /// <param name="refreshToken" example="asd.sda.das">Curret refresh token.</param>
     /// <returns>Tokens refreshed.</returns>
-    [HttpPost("RefreshToken")]
+    [HttpPost("Refresh")]
     [ProducesResponseType(typeof(AuthenticateResponseDTO), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(AppException), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> RefreshToken([FromHeader(Name = "RefreshToken")] string refreshToken)

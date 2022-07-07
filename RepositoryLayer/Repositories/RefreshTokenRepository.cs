@@ -18,6 +18,6 @@ internal class RefreshTokenRepository : ContextRepositoryBase<RefreshToken>, IRe
         => await RemoveAsync(refreshToken);
 
     public async Task AddRefreshToken(string refreshToken, string userId)
-        => await RemoveAsync(new RefreshToken() { UserId = userId, Token = refreshToken });
+        => await AddAsync(new RefreshToken() { UserId = userId, Token = refreshToken });
 
 }

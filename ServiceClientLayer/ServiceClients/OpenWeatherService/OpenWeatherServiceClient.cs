@@ -6,11 +6,6 @@ namespace ServiceClientLayer.ServiceClients.OpenWeatherService;
 
 public class OpenWeatherServiceClient : IOpenWeatherServiceClient
 {
-    const int MAXIMUM_VALID_LATITUDE = 90;
-    const int MINIMUM_VALID_LATITUDE = -90;
-    const int MAXIMUM_VALID_LONGTITUDE = 180;
-    const int MINIMUM_VALID_LONGTITUDE = -180;
-
     private string _apiKey;
     private HttpClient _httpClient;
 
@@ -22,15 +17,6 @@ public class OpenWeatherServiceClient : IOpenWeatherServiceClient
 
     public async Task<Result<WeatherForecast>> GetTemperature(double latitude, double longtitude)
     {
-        if (latitude > MAXIMUM_VALID_LATITUDE || latitude < MINIMUM_VALID_LATITUDE)
-        {
-            throw new ArgumentException($"Latitude out of range. Range must be >={MAXIMUM_VALID_LATITUDE} and <={MINIMUM_VALID_LATITUDE}. Given: {latitude}");
-        }
-        if (longtitude > MAXIMUM_VALID_LONGTITUDE || longtitude < MINIMUM_VALID_LONGTITUDE)
-        {
-            throw new ArgumentException($"Longtitude out of range. Range must be >={MAXIMUM_VALID_LONGTITUDE} and <={MINIMUM_VALID_LONGTITUDE}. Given: {longtitude}");
-        }
-
         var parameters = new List<(string, string)>(){
             ("lat", latitude.ToString()),
             ("lon", longtitude.ToString()),

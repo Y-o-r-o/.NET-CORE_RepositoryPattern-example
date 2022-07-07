@@ -2,7 +2,7 @@
 
 public class AppException
 {
-    public AppException(int statusCode, string message, AdditionalInformation details = null)
+    public AppException(int statusCode, string message, AdditionalInformation? details = null)
     {
         StatusCode = statusCode;
         Message = message;
@@ -24,7 +24,7 @@ public class AppException
     /// <summary>
     /// Http error details (dev only)
     /// </summary>
-    public AdditionalInformation Details { get; set; }
+    public AdditionalInformation? Details { get; set; }
 
 }
 
@@ -34,13 +34,13 @@ public class AdditionalInformation
     /// File in witch exception was triggered.
     /// </summary>
     /// <example>C:\\Project\\API\\Controllers\\SomeController.cs</example>
-    public string File { get; set; }
+    public string? File { get; set; }
 
     /// <summary>
     /// Http status code
     /// </summary>
-    /// <example>API.Controllers.SomeController+<GetSomething>d__2"</example>
-    public string MethodName { get; set; }
+    /// <example>API.Controllers.SomeController GetSomething d__2</example>
+    public string? MethodName { get; set; }
 
     /// <summary>
     /// Line in witch exception was triggered.

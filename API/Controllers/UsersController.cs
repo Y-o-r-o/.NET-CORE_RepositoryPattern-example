@@ -22,12 +22,21 @@ public class UsersController : BaseApiController
     /// <summary>Gets a user by id.</summary>
     /// <param name="id" example="2ecb003d-5f09-4f81-82f7-ee7388165432">The id of user.</param>
     /// <returns>got user.</returns>
-    [HttpGet("Get")]
+    [HttpGet("{id}")]
     [ProducesResponseType(typeof(UserDTO), 200)]
     [ProducesResponseType(typeof(AppException), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> Get(string id)
+    public async Task<IActionResult> GetById(string id)
     {
         return HandleResult(await _userServices.GetUserAsync(id));
     }
 
+    /// <summary>Gets all users.</summary>
+    /// <returns>got user.</returns>
+    [HttpGet]
+    [ProducesResponseType(typeof(UserDTO), 200)]
+    [ProducesResponseType(typeof(AppException), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> GetAll()
+    {
+        return HandleResult(await _userServices.GetUsersAsync());
+    }
 }

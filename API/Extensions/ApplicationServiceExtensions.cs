@@ -6,7 +6,7 @@ using RepositoryLayer.Databases.Configuration;
 using RepositoryLayer.Repositories.DependencyInjections;
 using ServiceClientLayer.DependencyInjections;
 using Swashbuckle.AspNetCore.Filters;
-
+using System.Text.Json.Serialization;
 
 namespace API.Extensions;
 
@@ -15,7 +15,8 @@ public static class ApplicationServiceExtensions
     public static IServiceCollection ConfigureServices(this IServiceCollection services, IConfiguration config)
     {
         services.ConfigureSettings(config);
-        services.AddControllers();
+        services.AddControllers().AddJsonOptions(options =>
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
         services.AddDbContext<DataContext>(options => options.UseSqlServer(config.GetConnectionString("Context")));
 
