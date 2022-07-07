@@ -5,7 +5,7 @@ namespace Core.Mappings;
 
 public static class MappingProfiles
 {
-    public static SecurityTokenDescriptor Map(IEnumerable<Claim> claims, double expires, SigningCredentials credentials)
+    public static SecurityTokenDescriptor Map(IEnumerable<Claim>? claims, double expires, SigningCredentials credentials)
     {
         return new SecurityTokenDescriptor
         {

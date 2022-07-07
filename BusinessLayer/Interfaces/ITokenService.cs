@@ -4,14 +4,14 @@ namespace BusinessLayer.Interfaces;
 
 public interface ITokenService
 {
-    public Task<string> Generate(AppUser user);
+    public Task<string> GenerateAsync(AppUser user);
 }
 
 public interface IRefreshTokenService : ITokenService
 {
     public void Validate(string refreshToken);
-    public Task<RefreshToken> GetRefreshToken(string requestRefreshToken);
-    public Task RemoveRefreshToken(RefreshToken refreshToken);
+    public Task<RefreshToken> GetRefreshTokenAsync(string requestRefreshToken);
+    public Task RemoveRefreshTokenAsync(RefreshToken refreshToken);
 }
 
 public interface IAccessTokenService : ITokenService { }

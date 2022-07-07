@@ -5,8 +5,8 @@ public interface IRefreshTokenRepository
 {
 
 
-    public Task<RefreshToken?> GetRefreshTokenByRequestRefreshToken(string requestRefreshToken);
-    public Task RemoveRefreshToken(RefreshToken refreshToken);
-    public Task AddRefreshToken(string refreshToken, string userId);
+    public Task<RefreshToken?> GetRefreshTokenByRequestRefreshTokenAsync(string requestRefreshToken);
+    public Task RemoveRefreshTokenAsync(RefreshToken refreshToken);
+    public Task AddRefreshTokenAsync(string refreshToken, string userId);
 
 }

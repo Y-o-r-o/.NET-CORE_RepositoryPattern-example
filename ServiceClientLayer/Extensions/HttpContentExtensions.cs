@@ -6,7 +6,7 @@ namespace ServiceClientLayer.Extensions
 {
     public static class HttpContentExtensions
     {
-        public async static Task<T> Read<T>(this HttpContent content)
+        public async static Task<T?> Read<T>(this HttpContent content)
         {
             var options = new JsonSerializerOptions
             {

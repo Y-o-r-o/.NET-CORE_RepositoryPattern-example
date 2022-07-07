@@ -25,7 +25,7 @@ public static class JwtSecurityTokenHandlerExtensions
         }
     }
 
-    public static string GenerateToken(this JwtSecurityTokenHandler handler, string secretKey, double expires, IEnumerable<Claim> claims = null)
+    public static string GenerateToken(this JwtSecurityTokenHandler handler, string secretKey, double expires, IEnumerable<Claim>? claims = null)
     {
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

@@ -22,7 +22,7 @@ public class AuthenticationController : BaseApiController
     [HttpPost("Login")]
     [ProducesResponseType(typeof(AuthenticateResponseDTO), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(AppException), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> Login([FromBody]LoginDTO loginDTO)
+    public async Task<IActionResult> LoginAsync([FromBody]LoginDTO loginDTO)
     {
         return HandleResult(await _authenticateService.LoginAsync(loginDTO.Email,loginDTO.Password));
     }
@@ -33,7 +33,7 @@ public class AuthenticationController : BaseApiController
     [HttpPost("Refresh")]
     [ProducesResponseType(typeof(AuthenticateResponseDTO), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(AppException), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> RefreshToken([FromHeader(Name = "RefreshToken")] string refreshToken)
+    public async Task<IActionResult> RefreshTokenAsync([FromHeader(Name = "RefreshToken")] string refreshToken)
     {
         return HandleResult(await _authenticateService.RefreshTokenAsync(refreshToken));
     }

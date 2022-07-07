@@ -25,7 +25,7 @@ public class UsersController : BaseApiController
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(UserDTO), 200)]
     [ProducesResponseType(typeof(AppException), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetById(string id)
+    public async Task<IActionResult> GetByIdAsync(string id)
     {
         return HandleResult(await _userServices.GetUserAsync(id));
     }
@@ -35,7 +35,7 @@ public class UsersController : BaseApiController
     [HttpGet]
     [ProducesResponseType(typeof(UserDTO), 200)]
     [ProducesResponseType(typeof(AppException), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAllAsync()
     {
         return HandleResult(await _userServices.GetUsersAsync());
     }

@@ -7,7 +7,7 @@ public class WeatherForecast
 
     public List<Weather> Weather { get; set; } = new();
 
-    public string Base { get; set; }
+    public string? Base { get; set; }
 
     public MainForecast Main { get; set; } = new();
 
@@ -25,7 +25,7 @@ public class WeatherForecast
 
     public int Id { get; set; }
 
-    public string Name { get; set; }
+    public string? Name { get; set; }
 
     public int Cod { get; set; }
 }
@@ -36,7 +36,7 @@ public class Sys
 
     public int Id { get; set; }
 
-    public string Country { get; set; }
+    public string? Country { get; set; }
 
     public int Sunrise { get; set; }
 
@@ -47,11 +47,11 @@ public class Weather
 {
     public int Id { get; set; }
 
-    public string Main { get; set; }
+    public string? Main { get; set; }
 
-    public string Description { get; set; }
+    public string? Description { get; set; }
 
-    public string Icon { get; set; }
+    public string? Icon { get; set; }
 }
 
 public class Wind

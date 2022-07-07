@@ -2,7 +2,7 @@
 
 public class GoogleMapsSettings
 {
-    public string ApiKey { get; set; }
-    public string OutputFormat { get; set; }
+    public string? ApiKey { get; set; }
+    public string? OutputFormat { get; set; }
 
 }

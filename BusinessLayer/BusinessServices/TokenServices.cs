@@ -21,7 +21,7 @@ public class AccessTokenService : IAccessTokenService
         _jwtSecurityTokenHandler = jwtSecurityTokenHandler;
     }
 
-    public Task<string> Generate(AppUser user)
+    public Task<string> GenerateAsync(AppUser user)
     {
         List<Claim> claims = new()
         {
@@ -47,18 +47,24 @@ public class RefreshTokenService : IRefreshTokenService
         _jwtSecurityTokenHandler = jwtSecurityTokenHandler;
     }
 
-    public async Task<string> Generate(AppUser user)
+    public async Task<string> GenerateAsync(AppUser user)
     {
         var refreshToken = _jwtSecurityTokenHandler.GenerateToken(_jwtSettings.RefreshTokenKey, _jwtSettings.RefreshTokenValidityInMinutes);
-        await _refreshTokenRepository.AddRefreshToken(refreshToken, user.Id);
+        await _refreshTokenRepository.AddRefreshTokenAsync(refreshToken, user.Id);
         return refreshToken;
     }
 
-    public async Task<RefreshToken> GetRefreshToken(string requestRefreshToken)
-        => await _refreshTokenRepository.GetRefreshTokenByRequestRefreshToken(requestRefreshToken);
+    public async Task<RefreshToken> GetRefreshTokenAsync(string requestRefreshToken)
+    {
+        var refreshToken = await _refreshTokenRepository.GetRefreshTokenByRequestRefreshTokenAsync(requestRefreshToken);
+        if (refreshToken is null) throw new Exception("Could not get refresh token.");
+        if (refreshToken.UserId is null) throw new Exception("Refresh token have no user id.");
+        if (refreshToken.Token is null) throw new Exception("Refresh token have no value.");
+        return refreshToken;
+    }
 
-    public async Task RemoveRefreshToken(RefreshToken refreshToken)
-        =>  await _refreshTokenRepository.RemoveRefreshToken(refreshToken);
+    public async Task RemoveRefreshTokenAsync(RefreshToken refreshToken)
+        =>  await _refreshTokenRepository.RemoveRefreshTokenAsync(refreshToken);
     
 
     public void Validate(string refreshToken)

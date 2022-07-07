@@ -21,7 +21,7 @@ internal class UserRepository : ContextRepositoryBase<AppUser>, IUserRepository
     public async Task<AppUser?> GetUserByEmailAsync(string email)
         => await GetAsync(u => u.Email == email);
 
-    public async Task<IEnumerable<AppUser>> GetUsersAsync()
+    public async Task<IEnumerable<AppUser>?> GetUsersAsync()
         => await GetAllAsync();
 
     public async Task<SignInResult?> SignInUserByPasswordAsync(AppUser user, string password)

@@ -21,7 +21,7 @@ public class WeatherServices : IWeatherServices
 
     public async Task<MainForecastDTO> GetWeatherAsync(CityDTO city)
     {
-        var location = MappingProfiles.Map(await _googleMapsRepository.GetGeocodeByCityName(city.ToString()));
+        var location = MappingProfiles.Map(await _googleMapsRepository.GetGeocodeByCityNameAsync(city.ToString()));
         return MappingProfiles.Map((await _weatherForecastRepository.GetWeatherAsync(location.Lat, location.Lng)).Main);
     }
 }

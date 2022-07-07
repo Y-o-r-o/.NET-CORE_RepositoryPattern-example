@@ -16,6 +16,6 @@ internal class WeatherForecastRepository : ServiceClientRepositoryBase<WeatherFo
     }
 
     public async Task<WeatherForecast?> GetWeatherAsync(double latitude, double longtitude)
-        => await GetAsync(_openWeatherServiceClient.GetTemperature, latitude, longtitude);
+        => await GetAsync(_openWeatherServiceClient.GetTemperatureAsync, latitude, longtitude);
 
 }

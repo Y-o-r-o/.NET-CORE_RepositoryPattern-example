@@ -21,6 +21,8 @@ internal abstract class ServiceClientRepositoryBase<TEntity> where TEntity : cla
     private TEntity? ProcessGetResponseAsync<TServiceClientEntity>(Result<TServiceClientEntity> response)
         where TServiceClientEntity : class, new()
     {
+        if (response.Value is null) throw new Exception("Couldn't get response value.");
+        
         TEntity? entity = null;
 
         if (response.IsSuccess)

@@ -1,9 +1,9 @@
 ﻿using BusinessLayer.DTOs;
 using BusinessLayer.Interfaces;
+using Core;
 using RepositoryLayer.Databases.Entities;
 using RepositoryLayer.Interfaces;
 using System.Net;
-using System.Web.Http;
 
 namespace BusinessLayer.BusinessServices;
 public class AuthenticateService : IAuthenticateService
@@ -22,28 +22,32 @@ public class AuthenticateService : IAuthenticateService
     public async Task<AuthenticateResponseDTO> LoginAsync(string email, string password)
     {
         var user = await _userRepository.GetUserByEmailAsync(email);
+        if (user is null) throw new HttpResponseException(HttpStatusCode.BadRequest);
+        
         var signInResult = await _userRepository.SignInUserByPasswordAsync(user, password);
+        if (signInResult is null) throw new HttpResponseException(HttpStatusCode.InternalServerError, "Could not sign in user.");
+        
         if (!signInResult.Succeeded) throw new HttpResponseException(HttpStatusCode.Unauthorized);
-        return await Authenticate(user);
+        return await AuthenticateAsync(user);
     }
 
     public async Task<AuthenticateResponseDTO> RefreshTokenAsync(string requestRefreshToken)
-    {
+    {       
         _refreshTokenService.Validate(requestRefreshToken);
         
-        var refreshToken = await _refreshTokenService.GetRefreshToken(requestRefreshToken);
-        await _refreshTokenService.RemoveRefreshToken(refreshToken);
+        var refreshToken = await _refreshTokenService.GetRefreshTokenAsync(requestRefreshToken);
+        await _refreshTokenService.RemoveRefreshTokenAsync(refreshToken);
 
         var user = await _userRepository.GetUserByIdAsync(refreshToken.UserId);
 
-        return await Authenticate(user);
+        return await AuthenticateAsync(user);
     }
 
-    private async Task<AuthenticateResponseDTO> Authenticate(AppUser user)
+    private async Task<AuthenticateResponseDTO> AuthenticateAsync(AppUser user)
         => new AuthenticateResponseDTO
         {
-            AccessToken = await _accessTokenService.Generate(user),
-            RefreshToken = await _refreshTokenService.Generate(user)
+            AccessToken = await _accessTokenService.GenerateAsync(user),
+            RefreshToken = await _refreshTokenService.GenerateAsync(user)
         };
 
 }

@@ -3,6 +3,6 @@
 namespace RepositoryLayer.Interfaces;
 public interface IGeocodeRepository
 {
-    public Task<Geocode?> GetGeocodeByCityName(string city);
+    public Task<Geocode?> GetGeocodeByCityNameAsync(string city);
 
 }

@@ -11,13 +11,13 @@ internal class RefreshTokenRepository : ContextRepositoryBase<RefreshToken>, IRe
         Entities = context.Set<RefreshToken>();
     }
 
-    public async Task<RefreshToken?> GetRefreshTokenByRequestRefreshToken(string requestRefreshToken)
+    public async Task<RefreshToken?> GetRefreshTokenByRequestRefreshTokenAsync(string requestRefreshToken)
         => await GetAsync(t => t.Token == requestRefreshToken);
 
-    public async Task RemoveRefreshToken(RefreshToken refreshToken)
+    public async Task RemoveRefreshTokenAsync(RefreshToken refreshToken)
         => await RemoveAsync(refreshToken);
 
-    public async Task AddRefreshToken(string refreshToken, string userId)
+    public async Task AddRefreshTokenAsync(string refreshToken, string userId)
         => await AddAsync(new RefreshToken() { UserId = userId, Token = refreshToken });
 
 }
