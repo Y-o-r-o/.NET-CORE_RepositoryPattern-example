@@ -13,7 +13,6 @@ public class MappingProfiles
     where TResult : new()
     where TSource : class, new()
     {
-        var sourceProp = typeof(TSource).GetProperties();
         var resultMapper = typeof(MappingProfiles).GetMethods().FirstOrDefault(m =>
             m.ReturnType == typeof(TResult) &&
             m.GetParameters()[0].ParameterType == typeof(TSource));
