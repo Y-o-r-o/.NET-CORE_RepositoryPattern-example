@@ -13,7 +13,7 @@ public class WeatherRepositoryTests
     const int MAXIMUM_VALID_LONGTITUDE = 180;
     const int MINIMUM_VALID_LONGTITUDE = -180;
 
-    private MainForecastRepository _weatherForecastRepository;
+    private WeatherForecastRepository _weatherForecastRepository;
     private static Random _random = new Random();
    
     private static IEnumerable<TestCaseData> ShouldThrowOutOfBondsExceptionTestCases
@@ -58,7 +58,7 @@ public class WeatherRepositoryTests
                     Result<WeatherForecast>.Success(AssertWeatherForecast.GetWeatherForecastContainingTemperatureZero()
                 )));
 
-        var weatherForecastRepository = new MainForecastRepository(mockedOpenWeatherServiceClient.Object); //now dependant on IServiceProvider...
+        var weatherForecastRepository = new WeatherForecastRepository(mockedOpenWeatherServiceClient.Object); //now dependant on IServiceProvider...
         _weatherForecastRepository = weatherForecastRepository;
 
     }

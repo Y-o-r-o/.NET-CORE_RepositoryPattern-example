@@ -5,17 +5,17 @@ using RepositoryLayer.Repositories.Base;
 
 namespace RepositoryLayer.RepositoryServices;
 
-internal class MainForecastRepository : ServiceClientRepositoryBase<MainForecast>, IMainForecastRepository
+internal class WeatherForecastRepository : ServiceClientRepositoryBase<WeatherForecast>, IWeatherForecastRepository
 {
 
     private IOpenWeatherServiceClient _openWeatherServiceClient;
 
-    public MainForecastRepository(IOpenWeatherServiceClient openWeatherServiceClient, IServiceProvider service) : base(service)
+    public WeatherForecastRepository(IOpenWeatherServiceClient openWeatherServiceClient)
     {
         _openWeatherServiceClient = openWeatherServiceClient;
     }
 
-    public async Task<MainForecast?> GetWeatherAsync(double latitude, double longtitude)
+    public async Task<WeatherForecast?> GetWeatherAsync(double latitude, double longtitude)
         => await GetAsync(_openWeatherServiceClient.GetTemperature, latitude, longtitude);
 
 }

@@ -6,32 +6,27 @@ namespace RepositoryLayer.Repositories.Base;
 
 internal abstract class ServiceClientRepositoryBase<TEntity> where TEntity : class, new()
 {
-    private IServiceProvider _service;
-    private object? _mapper = null;
 
-    protected ServiceClientRepositoryBase(IServiceProvider service)
-    {
-
-    }
+    protected ServiceClientRepositoryBase() { }
 
     public virtual async Task<TEntity?> GetAsync<TServiceClientEntity, TParam>(Func<TParam, Task<Result<TServiceClientEntity>>> ServiceClientGetAsync, TParam param)
+         where TServiceClientEntity : class, new()
         => ProcessGetResponseAsync<TServiceClientEntity>(await ServiceClientGetAsync(param));
 
     public virtual async Task<TEntity?> GetAsync<TServiceClientEntity, TParam, TParam2>(Func<TParam, TParam2, Task<Result<TServiceClientEntity>>> ServiceClientGetAsync, TParam param, TParam2 param2)
+         where TServiceClientEntity : class, new()
         => ProcessGetResponseAsync<TServiceClientEntity>(await ServiceClientGetAsync(param, param2));
 
 
     private TEntity? ProcessGetResponseAsync<TServiceClientEntity>(Result<TServiceClientEntity> response)
+        where TServiceClientEntity : class, new()
     {
         TEntity? entity = null;
 
         if (response.IsSuccess)
         {
-            if (_mapper is null)
-            {
-                _mapper = (IMapper<TServiceClientEntity, TEntity>)_service.GetService(typeof(IMapper<TServiceClientEntity, TEntity>)); //slow
-            }
-            entity = ((IMapper<TServiceClientEntity, TEntity>)_mapper).Map(response.Value);
+
+            entity = MappingProfiles.TryMap<TServiceClientEntity, TEntity>(response.Value);
         }
 
         return entity;

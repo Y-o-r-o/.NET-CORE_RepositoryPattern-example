@@ -10,12 +10,11 @@ public static class RepositoryServicesExtensions
 {
     public static IServiceCollection AddRepositoryServices(this IServiceCollection services)
     {
-        services.AddScoped<IMainForecastRepository, MainForecastRepository>();
+        services.AddScoped<IWeatherForecastRepository, WeatherForecastRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
-        services.AddScoped<ILocationRepository, LocationRepository>();
+        services.AddScoped<IGeocodeRepository, GeocodeRepository>();
         
-        services.AddSingleton<IMapper<ServiceClientLayer.Models.Geocode, Geocode>, GeocodeMapper>();
         return services;
     }
 

@@ -18,27 +18,6 @@ public static class BusinessServicesExtensions
         services.AddScoped<IAuthenticateService, AuthenticateService>();
         services.AddScoped<IUserServices, UserServices>();
 
-        services.AddAuthentication(x =>
-        {
-            x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        }).AddJwtBearer(x =>
-        {
-            var jwtSettings = services.BuildServiceProvider().GetService<JwtSettings>()!;
-            x.SaveToken = true;
-            x.RequireHttpsMetadata = false;
-            x.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                ValidateLifetime = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.TokenKey)),
-                ValidateIssuer = false,
-                ValidateAudience = false,
-                ClockSkew = TimeSpan.Zero
-            };
-        });
-        services.AddSingleton<JwtSecurityTokenHandler>();
-
         return services;
     }
 

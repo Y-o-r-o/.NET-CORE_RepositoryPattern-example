@@ -3,15 +3,31 @@ using RepositoryLayer.Models;
 namespace RepositoryLayer.Mappers;
 
 
-
-public interface IMapper<T1,T2> where T2 : new() 
+public class MappingProfiles
 {
-    public T2 Map(T1 input);
-}
+    private MappingProfiles() { }
+    private static readonly MappingProfiles _instance = new MappingProfiles();
+    public static MappingProfiles Instance { get { return _instance; } }
 
-public class GeocodeMapper : IMapper<ServiceClientLayer.Models.Geocode, Geocode>
-{
-    public Geocode Map(ServiceClientLayer.Models.Geocode from)
+    public static TResult? TryMap<TSource, TResult>(TSource source)
+    where TResult : new()
+    where TSource : class, new()
+    {
+        var sourceProp = typeof(TSource).GetProperties();
+        var resultMapper = typeof(MappingProfiles).GetMethods().FirstOrDefault(m =>
+            m.ReturnType == typeof(TResult) &&
+            m.GetParameters()[0].ParameterType == typeof(TSource));
+        if (resultMapper is null)
+            throw new Exception($"Mapper not found. From: {typeof(TSource)}, to: {typeof(TResult)}");
+
+        TSource[] sources = new TSource[] { source };
+
+        object res = resultMapper.Invoke(MappingProfiles.Instance, sources);
+
+        return (TResult)res;
+    }
+
+    public static Geocode Map(ServiceClientLayer.Models.Geocode from)
     {
         return new Geocode
         {
@@ -64,17 +80,8 @@ public class GeocodeMapper : IMapper<ServiceClientLayer.Models.Geocode, Geocode>
             }),
             Status = from.Status
         };
-
     }
-}
 
-
-
-
-
-
-public static class MappingProfiles
-{
     public static WeatherForecast Map(ServiceClientLayer.Models.WeatherForecast from)
     {
         return new WeatherForecast

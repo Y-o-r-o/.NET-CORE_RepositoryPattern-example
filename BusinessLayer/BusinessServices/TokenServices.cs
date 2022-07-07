@@ -1,6 +1,5 @@
 ﻿using BusinessLayer.Interfaces;
 using BusinessLayer.Settings;
-using Core;
 using RepositoryLayer.Databases.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;

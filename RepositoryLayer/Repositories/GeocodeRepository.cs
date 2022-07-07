@@ -1,25 +1,27 @@
 ﻿using RepositoryLayer.Interfaces;
+using RepositoryLayer.Mappers;
 using RepositoryLayer.Models;
 using RepositoryLayer.Repositories.Base;
 using ServiceClientLayer.ServiceClients.OpenWeatherService;
 
 namespace RepositoryLayer.Repositories;
-internal class LocationRepository : ServiceClientRepositoryBase<Location>, ILocationRepository
+internal class GeocodeRepository : ServiceClientRepositoryBase<Geocode>, IGeocodeRepository
 {
 
     private IGoogleMapsServiceClient _googleMapsServiceClient;
 
-    public LocationRepository(IGoogleMapsServiceClient googleMapsServiceClient, IServiceProvider service) : base(service)
+    public GeocodeRepository(IGoogleMapsServiceClient googleMapsServiceClient)
     {
         _googleMapsServiceClient = googleMapsServiceClient;
     }
 
-    public async Task<Location?> GetLocationByCityName(string city)
+    public async Task<Geocode?> GetGeocodeByCityName(string city)
         => await GetAsync(_googleMapsServiceClient.GetCordinates, city);
 
 
 
-    //Old
+
+
     //public async Task<Location> GetLocationByCityName(string city)
     //{
     //    var googleMapsResponse = await _googleMapsServiceClient.GetCordinates(city);
