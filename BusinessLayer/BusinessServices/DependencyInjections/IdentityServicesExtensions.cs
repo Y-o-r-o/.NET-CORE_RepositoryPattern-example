@@ -14,7 +14,7 @@ namespace BusinessLayer.BusinessServices.DependencyInjections;
 
 public static class IdentityServicesExtensions
 {
-    public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration config)
+    public static IServiceCollection AddIdentityServices(this IServiceCollection services)
     {
         services.AddIdentityCore<AppUser>()
             .AddEntityFrameworkStores<DataContext>()

@@ -3,9 +3,9 @@ using System.Diagnostics;
 
 namespace API.Extensions;
 
-public static class ExeptionExtensions
+public static class ExceptionExtensions
 {
-    public static AdditionalInformation AnalyzeExeption(this Exception ex)
+    public static AdditionalInformation AnalyzeException(this Exception ex)
     {
         
         var trace = new StackTrace(ex, true);

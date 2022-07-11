@@ -70,8 +70,6 @@ public static class ApplicationServiceExtensions
                 .AddRepositoryServices()
                 .AddBusinessServices();
 
-        services.AddIdentityServices(config);
-
         return services;
     }
 }

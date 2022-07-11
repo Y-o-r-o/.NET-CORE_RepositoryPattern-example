@@ -12,6 +12,8 @@ public static class BusinessServicesExtensions
 {
     public static IServiceCollection AddBusinessServices(this IServiceCollection services)
     {
+        services.AddIdentityServices();
+
         services.AddScoped<IWeatherServices, WeatherServices>();
         services.AddScoped<IRefreshTokenService, RefreshTokenService>();
         services.AddScoped<IAccessTokenService, AccessTokenService>();

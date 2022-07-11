@@ -44,7 +44,7 @@ namespace API.Middleware
             context.Response.StatusCode = (int)httpStatusCode;
 
             var response = _env.IsDevelopment()
-            ? new AppException(context.Response.StatusCode, exception.Message, exception.AnalyzeExeption())
+            ? new AppException(context.Response.StatusCode, exception.Message, exception.AnalyzeException())
             : new AppException(context.Response.StatusCode, httpStatusCode.ToString());
 
             var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };

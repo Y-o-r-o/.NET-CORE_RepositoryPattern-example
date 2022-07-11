@@ -8,16 +8,20 @@ namespace UnitTests.RepositoryLayerTests;
 
 public class WeatherRepositoryTests
 {
+    private const double MAXIMUM_VALID_LATITUDE = 90;
+    private const double MINIMUM_VALID_LATITUDE = -90;
+    private const double MAXIMUM_VALID_LONGTITUDE = 180;
+    private const double MINIMUM_VALID_LONGTITUDE = -180;
+
     private WeatherForecastRepository _weatherForecastRepository;
-    private static Random _random = new Random();
 
     [SetUp]
     public void SetUp()
     {
         var mockedOpenWeatherServiceClient = new Mock<IOpenWeatherServiceClient>();
-        
+
         mockedOpenWeatherServiceClient.Setup(method =>
-            method.GetTemperature(It.IsAny<double>(), It.IsAny<double>())).Returns(
+            method.GetTemperatureAsync(It.IsAny<double>(), It.IsAny<double>())).Returns(
                 Task.FromResult(
                     Result<WeatherForecast>.Success(AssertWeatherForecast.GetWeatherForecastContainingTemperatureZero()
                 )));
@@ -27,4 +31,31 @@ public class WeatherRepositoryTests
 
     }
 
+    [Test]
+    //Arrange
+    [TestCase(MAXIMUM_VALID_LATITUDE, 0, TestName = "Maximum valid latidue border")]
+    [TestCase(MINIMUM_VALID_LATITUDE, 0, TestName = "Maximum valid latidue border")]
+    [TestCase(MAXIMUM_VALID_LONGTITUDE, 0, TestName = "Maximum valid latidue border")]
+    [TestCase(MINIMUM_VALID_LONGTITUDE, 0, TestName = "Maximum valid latidue border")]
+    public async Task GetWeatherAsync_ShouldReturnTemperatureZero(double latitude, double longtitude)
+    {
+
+        //Act
+        var res = await _weatherForecastRepository.GetWeatherAsync(latitude, longtitude);
+
+        //Assert
+        Assert.That(res.Main.Temp.Equals(0));
+    }
+
+    [Test]
+    //Arrange
+    [TestCase(MAXIMUM_VALID_LATITUDE + 0.000001, 0, TestName = "Maximum valid latidue border")]
+    [TestCase(MINIMUM_VALID_LATITUDE - 0.000001, 0, TestName = "Maximum valid latidue border")]
+    [TestCase(MAXIMUM_VALID_LONGTITUDE + 0.000001, 0, TestName = "Maximum valid latidue border")]
+    [TestCase(MINIMUM_VALID_LONGTITUDE - 0.000001, 0, TestName = "Maximum valid latidue border")]
+    public void GetWeatherAsync_ShouldThrowOutOfBondsException(double latitude, double longtitude)
+    {
+        //Act/Assert 
+        Assert.ThrowsAsync<ArgumentException>(() => _weatherForecastRepository.GetWeatherAsync(latitude, longtitude));
+    }
 }

@@ -9,10 +9,10 @@ public class DataContext : IdentityDbContext<AppUser>
 
     public DbSet<RefreshToken>? RefreshTokens { get; set; }
 
-
     public DataContext()
     {
     }
+
     public DataContext(DbContextOptions options) : base(options)
     {
 
