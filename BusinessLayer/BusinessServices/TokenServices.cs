@@ -5,12 +5,13 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using RepositoryLayer.Repositories;
 using Core.Extensions;
+using BusinessLayer.BusinessServices.Base;
 
 namespace BusinessLayer.BusinessServices;
 
 
 
-public class AccessTokenService : IAccessTokenService
+internal class AccessTokenService : IAccessTokenService
 {
     private readonly JwtSecurityTokenHandler _jwtSecurityTokenHandler;
     private readonly JwtSettings _jwtSettings;
@@ -34,7 +35,7 @@ public class AccessTokenService : IAccessTokenService
 }
 
 
-public class RefreshTokenService : IRefreshTokenService
+internal class RefreshTokenService : RepositoryBusinessBase, IRefreshTokenService
 {
     private readonly IRefreshTokenRepository _refreshTokenRepository;
     private readonly JwtSecurityTokenHandler _jwtSecurityTokenHandler;
@@ -55,13 +56,7 @@ public class RefreshTokenService : IRefreshTokenService
     }
 
     public async Task<RefreshToken> GetRefreshTokenAsync(string requestRefreshToken)
-    {
-        var refreshToken = await _refreshTokenRepository.GetRefreshTokenByRequestRefreshTokenAsync(requestRefreshToken);
-        if (refreshToken is null) throw new Exception("Could not get refresh token.");
-        if (refreshToken.UserId is null) throw new Exception("Refresh token have no user id.");
-        if (refreshToken.Token is null) throw new Exception("Refresh token have no value.");
-        return refreshToken;
-    }
+        => await GetAsync(_refreshTokenRepository.GetRefreshTokenByRequestRefreshTokenAsync, requestRefreshToken);
 
     public async Task RemoveRefreshTokenAsync(RefreshToken refreshToken)
         =>  await _refreshTokenRepository.RemoveRefreshTokenAsync(refreshToken);

@@ -1,17 +1,18 @@
-﻿using BusinessLayer.DTOs;
+﻿using BusinessLayer.BusinessServices.Base;
+using BusinessLayer.DTOs;
 using BusinessLayer.Interfaces;
 using BusinessLayer.Mappers;
+using Core;
 using RepositoryLayer.Databases.Entities;
 using RepositoryLayer.Interfaces;
 using RepositoryLayer.Repositories;
+using System.Net;
 
 namespace BusinessLayer.BusinessServices;
 
-public class UserServices : IUserServices
+internal class UserServices : RepositoryBusinessBase, IUserServices
 {
-
     private readonly IUserRepository _userRepository;
-
 
     public UserServices(IUserRepository userRepository) 
     {
@@ -20,18 +21,12 @@ public class UserServices : IUserServices
 
 
     public async Task<UserDTO> GetUserAsync(string id)
-    {
-        var user = await _userRepository.GetUserByIdAsync(id);
-        return new UserDTO()
-        {
-            DisplayName = user.DisplayName,
-            Bio = user.Bio
-        };
-    }
+        => MappingProfiles.Map(await GetAsync(_userRepository.GetUserByIdAsync, id));
+    
 
     public async Task<IEnumerable<UserDTO>> GetUsersAsync()
     {
-        var users = await _userRepository.GetUsersAsync();
+        var users = await GetAllAsync(_userRepository.GetUsersAsync);
         List<UserDTO> mapped = new();
         foreach (AppUser user in users)
         {
@@ -39,7 +34,5 @@ public class UserServices : IUserServices
         }
         return mapped;
     }
-
-
 
 }

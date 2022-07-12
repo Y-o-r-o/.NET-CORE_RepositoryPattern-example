@@ -1,11 +1,15 @@
-﻿using BusinessLayer.DTOs;
+﻿using BusinessLayer.BusinessServices.Base;
+using BusinessLayer.DTOs;
 using BusinessLayer.Interfaces;
 using BusinessLayer.Mappers;
+using Core;
 using RepositoryLayer.Interfaces;
+using RepositoryLayer.Models;
+using System.Net;
 
 namespace BusinessLayer.BusinessServices;
 
-public class WeatherServices : IWeatherServices
+internal class WeatherServices : RepositoryBusinessBase, IWeatherServices
 {
     private IWeatherForecastRepository _weatherForecastRepository;
     private IGeocodeRepository _googleMapsRepository;
@@ -17,11 +21,22 @@ public class WeatherServices : IWeatherServices
     }
 
     public async Task<MainForecastDTO> GetWeatherAsync(CordinatesDTO cordinates)
-        => MappingProfiles.Map((await _weatherForecastRepository.GetWeatherAsync(cordinates.Latitude, cordinates.Longitude)).Main);
+    {
+        var weatherForecast = await GetAsync(_weatherForecastRepository.GetWeatherAsync, cordinates.Latitude, cordinates.Longitude);
+        return GetWeather(weatherForecast);
+    }
+
 
     public async Task<MainForecastDTO> GetWeatherAsync(CityDTO city)
     {
-        var location = MappingProfiles.Map(await _googleMapsRepository.GetGeocodeByCityNameAsync(city.ToString()));
-        return MappingProfiles.Map((await _weatherForecastRepository.GetWeatherAsync(location.Lat, location.Lng)).Main);
+        var location = MappingProfiles.Map(await GetAsync(_googleMapsRepository.GetGeocodeByCityNameAsync, city.ToString()));
+
+        var weatherForecast = await GetAsync(_weatherForecastRepository.GetWeatherAsync, location.Lat, location.Lng);
+        return GetWeather(weatherForecast);
     }
+
+    public MainForecastDTO GetWeather(WeatherForecast weatherForecast)
+        => MappingProfiles.Map(weatherForecast.Main);
+
+
 }

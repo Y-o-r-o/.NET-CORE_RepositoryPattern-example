@@ -1,4 +1,5 @@
-﻿using BusinessLayer.DTOs;
+﻿using BusinessLayer.BusinessServices.Base;
+using BusinessLayer.DTOs;
 using BusinessLayer.Interfaces;
 using Core;
 using RepositoryLayer.Databases.Entities;
@@ -6,7 +7,7 @@ using RepositoryLayer.Interfaces;
 using System.Net;
 
 namespace BusinessLayer.BusinessServices;
-public class AuthenticateService : IAuthenticateService
+internal class AuthenticateService : RepositoryBusinessBase, IAuthenticateService
 {
     private readonly IAccessTokenService _accessTokenService;
     private readonly IRefreshTokenService _refreshTokenService;
@@ -21,14 +22,13 @@ public class AuthenticateService : IAuthenticateService
 
     public async Task<AuthenticateResponseDTO> LoginAsync(string email, string password)
     {
-        var user = await _userRepository.GetUserByEmailAsync(email);
-        if (user is null) throw new HttpResponseException(HttpStatusCode.BadRequest);
+        var user = await GetAsync(_userRepository.GetUserByEmailAsync, email);
         
         var signInResult = await _userRepository.SignInUserByPasswordAsync(user, password);
         if (signInResult is null) throw new HttpResponseException(HttpStatusCode.InternalServerError, "Could not sign in user.");
+        if (signInResult.Succeeded) return await AuthenticateAsync(user);
         
-        if (!signInResult.Succeeded) throw new HttpResponseException(HttpStatusCode.Unauthorized);
-        return await AuthenticateAsync(user);
+        throw new HttpResponseException(HttpStatusCode.Unauthorized);
     }
 
     public async Task<AuthenticateResponseDTO> RefreshTokenAsync(string requestRefreshToken)
@@ -38,7 +38,7 @@ public class AuthenticateService : IAuthenticateService
         var refreshToken = await _refreshTokenService.GetRefreshTokenAsync(requestRefreshToken);
         await _refreshTokenService.RemoveRefreshTokenAsync(refreshToken);
 
-        var user = await _userRepository.GetUserByIdAsync(refreshToken.UserId);
+        var user = await GetAsync(_userRepository.GetUserByIdAsync,refreshToken.UserId, $"User with refresh token {requestRefreshToken} not found.");
 
         return await AuthenticateAsync(user);
     }
