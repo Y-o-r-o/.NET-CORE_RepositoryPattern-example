@@ -2,11 +2,8 @@
 using BusinessLayer.DTOs;
 using BusinessLayer.Interfaces;
 using BusinessLayer.Mappers;
-using Core;
 using RepositoryLayer.Interfaces;
 using RepositoryLayer.Models;
-using System.ComponentModel.DataAnnotations;
-using System.Net;
 
 namespace BusinessLayer.BusinessServices;
 
@@ -27,7 +24,6 @@ internal class WeatherServices : RepositoryBusinessBase, IWeatherServices
         return GetWeather(weatherForecast);
     }
 
-
     public async Task<MainForecastDTO> GetWeatherAsync(CityDTO city)
     {
         var location = MappingProfiles.Map(await GetAsync(_googleMapsRepository.GetGeocodeByCityNameAsync, city.ToString()));
@@ -38,6 +34,4 @@ internal class WeatherServices : RepositoryBusinessBase, IWeatherServices
 
     public MainForecastDTO GetWeather(WeatherForecast weatherForecast)
         => MappingProfiles.Map(weatherForecast.Main);
-
-
 }

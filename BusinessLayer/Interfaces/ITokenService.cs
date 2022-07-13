@@ -10,8 +10,11 @@ public interface ITokenService
 public interface IRefreshTokenService : ITokenService
 {
     public void Validate(string refreshToken);
+
     public Task<RefreshToken> GetRefreshTokenAsync(string requestRefreshToken);
+
     public Task RemoveRefreshTokenAsync(RefreshToken refreshToken);
 }
 
-public interface IAccessTokenService : ITokenService { }
+public interface IAccessTokenService : ITokenService
+{ }

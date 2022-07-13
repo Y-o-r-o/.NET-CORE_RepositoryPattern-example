@@ -1,6 +1,5 @@
-﻿using Swashbuckle.AspNetCore.Annotations;
+﻿namespace BusinessLayer.DTOs;
 
-namespace BusinessLayer.DTOs;
 public class AuthenticateResponseDTO
 {
     /// <summary>

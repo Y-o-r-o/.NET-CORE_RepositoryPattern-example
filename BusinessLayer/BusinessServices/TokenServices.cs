@@ -1,15 +1,13 @@
-﻿using BusinessLayer.Interfaces;
+﻿using BusinessLayer.BusinessServices.Base;
+using BusinessLayer.Interfaces;
 using BusinessLayer.Settings;
+using Core.Extensions;
 using RepositoryLayer.Databases.Entities;
+using RepositoryLayer.Repositories;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using RepositoryLayer.Repositories;
-using Core.Extensions;
-using BusinessLayer.BusinessServices.Base;
 
 namespace BusinessLayer.BusinessServices;
-
-
 
 internal class AccessTokenService : IAccessTokenService
 {
@@ -33,7 +31,6 @@ internal class AccessTokenService : IAccessTokenService
         return Task.FromResult(_jwtSecurityTokenHandler.GenerateToken(_jwtSettings.TokenKey, _jwtSettings.TokenValidityInMinutes, claims));
     }
 }
-
 
 internal class RefreshTokenService : RepositoryBusinessBase, IRefreshTokenService
 {
@@ -59,11 +56,8 @@ internal class RefreshTokenService : RepositoryBusinessBase, IRefreshTokenServic
         => await GetAsync(_refreshTokenRepository.GetRefreshTokenByRequestRefreshTokenAsync, requestRefreshToken);
 
     public async Task RemoveRefreshTokenAsync(RefreshToken refreshToken)
-        =>  await _refreshTokenRepository.RemoveRefreshTokenAsync(refreshToken);
-    
+        => await _refreshTokenRepository.RemoveRefreshTokenAsync(refreshToken);
 
     public void Validate(string refreshToken)
         => _jwtSecurityTokenHandler.ValidateToken(refreshToken, _jwtSettings.TokenValidationParameters);
-
-
 }

@@ -1,15 +1,15 @@
 using Core;
-using ServiceClientLayer.Models;
 using ServiceClientLayer.Extensions;
+using ServiceClientLayer.Models;
 
 namespace ServiceClientLayer.ServiceClients.OpenWeatherService;
 
 public class OpenWeatherServiceClient : IOpenWeatherServiceClient
 {
-    const double MAXIMUM_VALID_LATITUDE = 90;
-    const double MINIMUM_VALID_LATITUDE = -90;
-    const double MAXIMUM_VALID_LONGTITUDE = 180;
-    const double MINIMUM_VALID_LONGTITUDE = -180;
+    private const double MAXIMUM_VALID_LATITUDE = 90;
+    private const double MINIMUM_VALID_LATITUDE = -90;
+    private const double MAXIMUM_VALID_LONGTITUDE = 180;
+    private const double MINIMUM_VALID_LONGTITUDE = -180;
 
     private string? _apiKey;
     private HttpClient _httpClient;
@@ -49,7 +49,6 @@ public class OpenWeatherServiceClient : IOpenWeatherServiceClient
 
         return Result<WeatherForecast>.Failure("OpenWeatherMap api error: " + response.StatusCode.ToString());
     }
-
 }
 
 public class OpenWeatherParametersNames

@@ -1,6 +1,5 @@
 using API.Extensions;
 using Core;
-using Core.Extensions;
 using System.Net;
 using System.Text.Json;
 
@@ -17,7 +16,6 @@ namespace API.Middleware
             _env = env;
             _logger = logger;
             _next = next;
-
         }
 
         public async Task InvokeAsync(HttpContext context)
@@ -53,6 +51,5 @@ namespace API.Middleware
 
             await context.Response.WriteAsync(json);
         }
-
     }
 }

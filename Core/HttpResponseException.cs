@@ -14,5 +14,5 @@ public class HttpResponseException : System.Web.Http.HttpResponseException
         _message = message;
     }
 
-    public override string Message => _message is null ? _statusCodeMessage : _message;  
+    public override string Message => _message is null ? _statusCodeMessage : _message;
 }

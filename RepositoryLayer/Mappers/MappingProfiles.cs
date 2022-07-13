@@ -2,12 +2,14 @@ using RepositoryLayer.Models;
 
 namespace RepositoryLayer.Mappers;
 
-
 public class MappingProfiles
 {
-    private MappingProfiles() { }
+    private MappingProfiles()
+    { }
+
     private static readonly MappingProfiles _instance = new MappingProfiles();
-    public static MappingProfiles Instance { get { return _instance; } }
+    public static MappingProfiles Instance
+    { get { return _instance; } }
 
     public static TResult? TryMap<TSource, TResult>(TSource source)
     where TResult : new()
@@ -19,7 +21,7 @@ public class MappingProfiles
             m.GetParameters()[0].ParameterType == typeof(TSource));
         if (resultMapper is null)
             throw new Exception($"Mapper not found. From: {typeof(TSource)}, to: {typeof(TResult)}");
-        
+
         //Makes TSource array, because Invoke method works only with arrays.
         TSource[] sources = new TSource[] { source };
 

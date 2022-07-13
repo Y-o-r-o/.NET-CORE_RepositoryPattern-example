@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RepositoryLayer.Models;
+﻿namespace RepositoryLayer.Models;
 
 public class Geocode
 {
@@ -65,4 +59,3 @@ public class Viewport
     public Northeast Northeast { get; set; } = new();
     public Southwest Southwest { get; set; } = new();
 }
-

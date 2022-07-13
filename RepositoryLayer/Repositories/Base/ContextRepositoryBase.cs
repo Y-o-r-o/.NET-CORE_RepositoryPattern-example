@@ -3,6 +3,7 @@ using RepositoryLayer.Databases.Configuration;
 using System.Linq.Expressions;
 
 namespace RepositoryLayer.Repositories.Base;
+
 internal abstract class ContextRepositoryBase<TEntity>
     where TEntity : class
 {
@@ -21,10 +22,10 @@ internal abstract class ContextRepositoryBase<TEntity>
 
     public virtual async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>>? predicate = null)
     {
-        if(predicate is null) return await Entities.ToListAsync();
+        if (predicate is null) return await Entities.ToListAsync();
         return await Entities.Where(predicate).ToListAsync();
     }
-    
+
     public virtual async Task RemoveAsync(TEntity entity)
     {
         _context.Remove(entity);

@@ -24,8 +24,8 @@ public static class SettingsServicesExtensions
 
         var openWeatherMapSettings = new OpenWeatherMapSettings();
         config.Bind(nameof(OpenWeatherMapSettings), openWeatherMapSettings);
-        services.AddSingleton(openWeatherMapSettings); 
-        
+        services.AddSingleton(openWeatherMapSettings);
+
         var googleMapsSettings = new GoogleMapsSettings();
         config.Bind(nameof(GoogleMapsSettings), googleMapsSettings);
         services.AddSingleton(googleMapsSettings);

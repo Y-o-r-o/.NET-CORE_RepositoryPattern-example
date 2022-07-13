@@ -1,7 +1,6 @@
 using BusinessLayer.DTOs;
 using BusinessLayer.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
 namespace API.Controllers;
 
@@ -9,7 +8,6 @@ namespace API.Controllers;
 [Route("[controller]")]
 public class WeatherForecastController : BaseApiController
 {
-
     private readonly IWeatherServices _weatherServices;
 
     public WeatherForecastController(IWeatherServices weatherServices)
@@ -22,7 +20,7 @@ public class WeatherForecastController : BaseApiController
     [HttpGet]
     [ProducesResponseType(typeof(MainForecastDTO), 200)]
     [ProducesResponseType(typeof(AppException), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetTemperatureAsync([FromBody]CordinatesDTO cordinates)
+    public async Task<IActionResult> GetTemperatureAsync([FromBody] CordinatesDTO cordinates)
     {
         return HandleResult(await _weatherServices.GetWeatherAsync(cordinates));
     }
@@ -37,5 +35,4 @@ public class WeatherForecastController : BaseApiController
     {
         return HandleResult(await _weatherServices.GetWeatherAsync(city));
     }
-
 }

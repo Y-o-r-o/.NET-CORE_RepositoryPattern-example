@@ -4,7 +4,6 @@ using Swashbuckle.AspNetCore.Filters;
 
 namespace API.Extensions;
 
-
 public static class SwaggerServicesExtensions
 {
     public static IServiceCollection AddSwaggerExtensions(this IServiceCollection services)
@@ -48,12 +47,9 @@ public static class SwaggerServicesExtensions
                            new string[]{}
                        }
                    });
-
-
         });
         services.AddSwaggerExamplesFromAssemblies(typeof(UsersController).Assembly);
 
         return services;
     }
-
 }

@@ -1,14 +1,12 @@
 ﻿using BusinessLayer.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using RepositoryLayer.Databases.Configuration;
 using RepositoryLayer.Databases.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
-
 
 namespace BusinessLayer.BusinessServices.DependencyInjections;
 

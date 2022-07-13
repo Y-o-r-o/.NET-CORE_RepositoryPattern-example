@@ -1,12 +1,11 @@
 using Core;
-using Newtonsoft.Json.Serialization;
 using System.Text.Json;
 
 namespace ServiceClientLayer.Extensions
 {
     public static class HttpContentExtensions
     {
-        public async static Task<T?> Read<T>(this HttpContent content)
+        public static async Task<T?> Read<T>(this HttpContent content)
         {
             var options = new JsonSerializerOptions
             {

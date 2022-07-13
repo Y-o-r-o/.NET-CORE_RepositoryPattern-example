@@ -19,7 +19,6 @@ internal class RepositoryBusinessBase
                 where TModel : new()
         => ProcessGetResponseAsync(await RepositoryGetAsync(param, param2), customExceptionMessage);
 
-
     private TModel ProcessGetResponseAsync<TModel>(TModel? result, string? customExceptionMessage)
     {
         if (result is null) throw new HttpResponseException(HttpStatusCode.NotFound, customExceptionMessage);

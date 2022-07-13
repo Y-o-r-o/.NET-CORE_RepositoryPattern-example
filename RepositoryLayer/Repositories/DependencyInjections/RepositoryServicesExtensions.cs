@@ -3,8 +3,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RepositoryLayer.Databases.Configuration;
 using RepositoryLayer.Interfaces;
-using RepositoryLayer.Mappers;
-using RepositoryLayer.Models;
 using RepositoryLayer.RepositoryServices;
 
 namespace RepositoryLayer.Repositories.DependencyInjections;
@@ -19,8 +17,7 @@ public static class RepositoryServicesExtensions
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
         services.AddScoped<IGeocodeRepository, GeocodeRepository>();
-        
+
         return services;
     }
-
 }

@@ -10,7 +10,6 @@ public interface IUserRepository
     public Task<AppUser?> GetUserByEmailAsync(string email);
 
     public Task<IEnumerable<AppUser>> GetUsersAsync();
-    
-    public Task<SignInResult?> SignInUserByPasswordAsync(AppUser user, string password);
 
+    public Task<SignInResult?> SignInUserByPasswordAsync(AppUser user, string password);
 }

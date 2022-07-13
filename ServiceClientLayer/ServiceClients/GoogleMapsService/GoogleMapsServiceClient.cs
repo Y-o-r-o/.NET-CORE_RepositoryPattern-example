@@ -1,6 +1,6 @@
 using Core;
-using ServiceClientLayer.Models;
 using ServiceClientLayer.Extensions;
+using ServiceClientLayer.Models;
 using ServiceClientLayer.ServiceClients.GoogleMapsService;
 
 namespace ServiceClientLayer.ServiceClients.OpenWeatherService;
@@ -36,7 +36,6 @@ public class GoogleMapsServiceClient : IGoogleMapsServiceClient
 
         return Result<Geocode>.Failure("GoogleMaps api error: " + response.StatusCode.ToString());
     }
-
 }
 
 public class GoogleMapsParametersNames

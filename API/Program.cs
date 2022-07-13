@@ -9,7 +9,7 @@ namespace API;
 
 internal class Program
 {
-    static async Task Main(string[] args)
+    private static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
         builder.Services.ConfigureServices(builder.Configuration);
@@ -23,7 +23,6 @@ internal class Program
         var userManager = servicesProvider.GetRequiredService<UserManager<AppUser>>();
         await context.Database.MigrateAsync();
         await Seed.SeedData(context, userManager);
-
 
         app.Configure();
 

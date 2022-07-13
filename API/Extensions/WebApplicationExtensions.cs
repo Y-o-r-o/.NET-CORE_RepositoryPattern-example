@@ -1,6 +1,4 @@
 using API.Middleware;
-using BusinessLayer.DTOs;
-using System.Text.RegularExpressions;
 
 namespace API.Extensions;
 
@@ -22,5 +20,4 @@ public static class WebApplicationExtensions
         app.UseAuthorization();
         app.MapControllers();
     }
-
 }

@@ -8,7 +8,6 @@ namespace API.Controllers;
 [Route("[controller]")]
 public class AuthenticationController : BaseApiController
 {
-
     private IAuthenticateService _authenticateService;
 
     public AuthenticationController(IAuthenticateService authenticateService)
@@ -22,9 +21,9 @@ public class AuthenticationController : BaseApiController
     [HttpPost("Login")]
     [ProducesResponseType(typeof(AuthenticateResponseDTO), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(AppException), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> LoginAsync([FromBody]LoginDTO loginDTO)
+    public async Task<IActionResult> LoginAsync([FromBody] LoginDTO loginDTO)
     {
-        return HandleResult(await _authenticateService.LoginAsync(loginDTO.Email,loginDTO.Password));
+        return HandleResult(await _authenticateService.LoginAsync(loginDTO.Email, loginDTO.Password));
     }
 
     /// <summary>Gives user new access token and refresh token.</summary>
@@ -37,5 +36,4 @@ public class AuthenticationController : BaseApiController
     {
         return HandleResult(await _authenticateService.RefreshTokenAsync(refreshToken));
     }
-
 }

@@ -2,6 +2,7 @@
 using ServiceClientLayer.ServiceClients.OpenWeatherService;
 
 namespace ServiceClientLayer.DependencyInjections;
+
 public static class ServiceClientServicesExtensions
 {
     public static IServiceCollection AddServiceClientServices(this IServiceCollection services)
@@ -16,5 +17,4 @@ public static class ServiceClientServicesExtensions
         });
         return services;
     }
-
 }

@@ -11,7 +11,6 @@ namespace API.Controllers;
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class UsersController : BaseApiController
 {
-
     private IUserServices _userServices;
 
     public UsersController(IUserServices userServices)

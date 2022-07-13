@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace BusinessLayer.DTOs;
+
 public class CordinatesDTO
 {
     /// <summary>

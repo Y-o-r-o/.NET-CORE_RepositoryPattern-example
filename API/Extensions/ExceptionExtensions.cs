@@ -7,9 +7,8 @@ public static class ExceptionExtensions
 {
     public static AdditionalInformation AnalyzeException(this Exception ex)
     {
-        
         var trace = new StackTrace(ex, true);
-        
+
         var stackFrame = trace.GeFirstFrame();
         var reflectedType = trace.GeFirstFrame().GetMethod().ReflectedType;
         var additionalInformation = new AdditionalInformation();

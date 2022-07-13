@@ -3,9 +3,9 @@ using RepositoryLayer.Databases.Entities;
 using RepositoryLayer.Repositories.Base;
 
 namespace RepositoryLayer.Repositories;
+
 internal class RefreshTokenRepository : ContextRepositoryBase<RefreshToken>, IRefreshTokenRepository
 {
-
     public RefreshTokenRepository(DataContext context) : base(context)
     {
         Entities = context.Set<RefreshToken>();
@@ -19,5 +19,4 @@ internal class RefreshTokenRepository : ContextRepositoryBase<RefreshToken>, IRe
 
     public async Task AddRefreshTokenAsync(string refreshToken, string userId)
         => await AddAsync(new RefreshToken() { UserId = userId, Token = refreshToken });
-
 }

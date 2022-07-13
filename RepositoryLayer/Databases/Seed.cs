@@ -37,7 +37,6 @@ namespace RepositoryLayer.Databases
                     await userManager.CreateAsync(user, "Pa$$w0rd");
                 }
 
-    
                 await context.SaveChangesAsync();
             }
         }

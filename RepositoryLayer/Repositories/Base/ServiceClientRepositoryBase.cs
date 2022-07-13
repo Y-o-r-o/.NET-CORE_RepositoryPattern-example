@@ -1,13 +1,12 @@
 ﻿using Core;
 using RepositoryLayer.Mappers;
 
-
 namespace RepositoryLayer.Repositories.Base;
 
 internal abstract class ServiceClientRepositoryBase<TEntity> where TEntity : class, new()
 {
-
-    protected ServiceClientRepositoryBase() { }
+    protected ServiceClientRepositoryBase()
+    { }
 
     public virtual async Task<TEntity?> GetAsync<TServiceClientEntity, TParam>(Func<TParam, Task<Result<TServiceClientEntity>>> ServiceClientGetAsync, TParam param)
          where TServiceClientEntity : class, new()
@@ -17,12 +16,11 @@ internal abstract class ServiceClientRepositoryBase<TEntity> where TEntity : cla
          where TServiceClientEntity : class, new()
         => ProcessGetResponseAsync<TServiceClientEntity>(await ServiceClientGetAsync(param, param2));
 
-
     private TEntity? ProcessGetResponseAsync<TServiceClientEntity>(Result<TServiceClientEntity> response)
         where TServiceClientEntity : class, new()
     {
         if (response.Value is null) throw new Exception("Couldn't get response value.");
-        
+
         TEntity? entity = null;
 
         if (response.IsSuccess)

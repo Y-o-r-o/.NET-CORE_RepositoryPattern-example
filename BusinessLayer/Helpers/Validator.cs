@@ -31,5 +31,4 @@ internal static class Validator
         if (stringBuilder is null) return;
         throw new Exception(stringBuilder.ToString());
     }
-
 }

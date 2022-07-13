@@ -25,7 +25,6 @@ public class AppException
     /// Http error details (dev only)
     /// </summary>
     public AdditionalInformation? Details { get; set; }
-
 }
 
 public class AdditionalInformation
@@ -53,5 +52,4 @@ public class AdditionalInformation
     /// </summary>
     /// <example>9</example>
     public int Column { get; set; }
-
 }

@@ -1,23 +1,24 @@
-﻿using Newtonsoft.Json.Converters;
-using System.Text.Json.Serialization;
-
-namespace BusinessLayer.DTOs;
+﻿namespace BusinessLayer.DTOs;
 
 /// <summary>
 /// Cities
 /// </summary>
 public enum CityDTO
 {
-    /// <summary>
+    None = 0,
+
+    /// summary>
     /// Vilnius
     /// </summary>
-    Vilnius,
+    Vilnius = 1,
+
     /// <summary>
     /// Kaunas
     /// </summary>
-    Kaunas,
+    Kaunas = 2,
+
     /// <summary>
     /// KLaipeda
     /// </summary>
-    Klaipeda
+    Klaipeda = 3
 }

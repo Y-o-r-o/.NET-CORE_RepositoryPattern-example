@@ -4,8 +4,7 @@ namespace ServiceClientLayer.Extensions;
 
 public static class HttpClientExtensions
 {
-
-    public async static Task<HttpResponseMessage> GetAsync(this HttpClient httpClient, string uri, IEnumerable<(string, string)> parameters)
+    public static async Task<HttpResponseMessage> GetAsync(this HttpClient httpClient, string uri, IEnumerable<(string, string)> parameters)
     {
         var uriBuilder = new UriBuilder(httpClient.BaseAddress.AbsoluteUri + uri);
         var paramValues = HttpUtility.ParseQueryString(uriBuilder.Query);

@@ -2,7 +2,6 @@ namespace RepositoryLayer.Models;
 
 public class WeatherForecast
 {
-
     public Coord Coord { get; set; } = new();
 
     public List<Weather> Weather { get; set; } = new();

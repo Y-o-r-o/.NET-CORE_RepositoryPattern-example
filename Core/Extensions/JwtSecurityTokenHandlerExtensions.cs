@@ -15,7 +15,7 @@ public static class JwtSecurityTokenHandlerExtensions
         {
             handler.ValidateToken(refreshToken, validationParameters, out SecurityToken validatedToken);
         }
-        catch (ArgumentNullException ex) 
+        catch (ArgumentNullException ex)
         {
             throw new HttpResponseException(HttpStatusCode.BadRequest, ex.Message);
         }
@@ -36,5 +36,4 @@ public static class JwtSecurityTokenHandlerExtensions
 
         return tokenHandler.WriteToken(token);
     }
-
 }
