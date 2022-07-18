@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.BusinessServices.Base;
 using BusinessLayer.DTOs;
+using BusinessLayer.Enums;
 using BusinessLayer.Interfaces;
 using BusinessLayer.Mappers;
 using RepositoryLayer.Interfaces;
@@ -24,11 +25,12 @@ internal class WeatherServices : RepositoryBusinessBase, IWeatherServices
         return GetWeather(weatherForecast);
     }
 
-    public async Task<MainForecastDTO> GetWeatherAsync(CityDTO city)
+    public async Task<MainForecastDTO> GetWeatherAsync(City city)
     {
+        if (city.Equals(City.None)) return null;
         var location = MappingProfiles.Map(await GetAsync(_googleMapsRepository.GetGeocodeByCityNameAsync, city.ToString()));
 
-        var weatherForecast = await GetAsync(_weatherForecastRepository.GetWeatherAsync, location.Lat, location.Lng);
+        var weatherForecast = await GetAsync(_weatherForecastRepository.GetWeatherAsync, 56.5, 56.5);
         return GetWeather(weatherForecast);
     }
 

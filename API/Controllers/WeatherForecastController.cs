@@ -1,4 +1,5 @@
 using BusinessLayer.DTOs;
+using BusinessLayer.Enums;
 using BusinessLayer.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,7 +32,7 @@ public class WeatherForecastController : BaseApiController
     [HttpGet("{city}")]
     [ProducesResponseType(typeof(MainForecastDTO), 200)]
     [ProducesResponseType(typeof(AppException), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetTemperatureAsync(CityDTO city)
+    public async Task<IActionResult> GetTemperatureAsync(City city)
     {
         return HandleResult(await _weatherServices.GetWeatherAsync(city));
     }

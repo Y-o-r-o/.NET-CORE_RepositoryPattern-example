@@ -26,10 +26,11 @@ internal abstract class ContextRepositoryBase<TEntity>
         return await Entities.Where(predicate).ToListAsync();
     }
 
-    public virtual async Task RemoveAsync(TEntity entity)
+    public virtual async Task<bool> RemoveAsync(TEntity entity)
     {
         _context.Remove(entity);
         await _context.SaveChangesAsync();
+        return true;
     }
 
     public virtual async Task AddAsync(TEntity entity)

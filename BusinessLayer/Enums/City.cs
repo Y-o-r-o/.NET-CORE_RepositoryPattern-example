@@ -1,9 +1,9 @@
-﻿namespace BusinessLayer.DTOs;
+﻿namespace BusinessLayer.Enums;
 
 /// <summary>
 /// Cities
 /// </summary>
-public enum CityDTO
+public enum City
 {
     None = 0,
 

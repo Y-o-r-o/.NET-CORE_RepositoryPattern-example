@@ -8,10 +8,6 @@ namespace UnitTests.RepositoryLayerTests;
 
 public class WeatherRepositoryTests
 {
-    private const double MAXIMUM_VALID_LATITUDE = 90;
-    private const double MINIMUM_VALID_LATITUDE = -90;
-    private const double MAXIMUM_VALID_LONGTITUDE = 180;
-    private const double MINIMUM_VALID_LONGTITUDE = -180;
 
     private WeatherForecastRepository _weatherForecastRepository;
 
@@ -23,7 +19,7 @@ public class WeatherRepositoryTests
         mockedOpenWeatherServiceClient.Setup(method =>
             method.GetTemperatureAsync(It.IsAny<double>(), It.IsAny<double>())).Returns(
                 Task.FromResult(
-                    Result<WeatherForecast>.Success(AssertWeatherForecast.GetWeatherForecastContainingTemperatureZero()
+                    Result<WeatherForecast>.Success(ArrangeWeatherForecast.GetWeatherForecastContainingTemperatureZero()
                 )));
 
         var weatherForecastRepository = new WeatherForecastRepository(mockedOpenWeatherServiceClient.Object);
@@ -33,10 +29,10 @@ public class WeatherRepositoryTests
     [Test]
     //Arrange
     [TestCase(0, 0, TestName = "Middle of border")]
-    [TestCase(MAXIMUM_VALID_LATITUDE, 0, TestName = "Maximum valid latidue border")]
-    [TestCase(MINIMUM_VALID_LATITUDE, 0, TestName = "Maximum valid latidue border")]
-    [TestCase(0, MAXIMUM_VALID_LONGTITUDE, TestName = "Maximum valid latidue border")]
-    [TestCase(0, MINIMUM_VALID_LONGTITUDE, TestName = "Maximum valid latidue border")]
+    [TestCase(ArrangeWeatherForecast.MAXIMUM_VALID_LATITUDE, 0, TestName = "Maximum valid latidue border")]
+    [TestCase(ArrangeWeatherForecast.MINIMUM_VALID_LATITUDE, 0, TestName = "Maximum valid latidue border")]
+    [TestCase(0, ArrangeWeatherForecast.MAXIMUM_VALID_LONGTITUDE, TestName = "Maximum valid latidue border")]
+    [TestCase(0, ArrangeWeatherForecast.MINIMUM_VALID_LONGTITUDE, TestName = "Maximum valid latidue border")]
     public async Task GetWeatherAsync_ShouldReturnTemperatureZero(double latitude, double longtitude)
     {
         //Act

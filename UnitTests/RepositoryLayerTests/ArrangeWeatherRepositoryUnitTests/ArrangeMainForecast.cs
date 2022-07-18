@@ -2,7 +2,7 @@
 
 namespace UnitTests.RepositoryLayerTests.ArrangeWeatherRepositoryUnitTests;
 
-public class AssertMainForecast
+public class ArrangeMainForecast
 {
     public static MainForecast GetForecastWithTemperatureZero()
     { return new MainForecast() { Temp = 0 }; }

@@ -22,7 +22,6 @@ internal class RepositoryBusinessBase
     private TModel ProcessGetResponseAsync<TModel>(TModel? result, string? customExceptionMessage)
     {
         if (result is null) throw new HttpResponseException(HttpStatusCode.NotFound, customExceptionMessage);
-        Validator.CheckIfAllObjectNonNullablePropertiesIsNotNull(result);
         return result;
     }
 }

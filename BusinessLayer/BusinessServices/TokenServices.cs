@@ -1,26 +1,74 @@
 ﻿using BusinessLayer.BusinessServices.Base;
 using BusinessLayer.Interfaces;
 using BusinessLayer.Settings;
-using Core.Extensions;
+using Core;
+using Core.Mappings;
+using Microsoft.IdentityModel.Tokens;
 using RepositoryLayer.Databases.Entities;
 using RepositoryLayer.Repositories;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Security.Claims;
+using System.Text;
 
 namespace BusinessLayer.BusinessServices;
 
-internal class AccessTokenService : IAccessTokenService
-{
-    private readonly JwtSecurityTokenHandler _jwtSecurityTokenHandler;
-    private readonly JwtSettings _jwtSettings;
 
-    public AccessTokenService(JwtSettings jwtSettings, JwtSecurityTokenHandler jwtSecurityTokenHandler)
+
+internal abstract class TokenService : RepositoryBusinessBase, ITokenService
+{
+    protected readonly JwtSecurityTokenHandler _jwtSecurityTokenHandler;
+
+    public TokenService(JwtSecurityTokenHandler jwtSecurityTokenHandler)
     {
-        _jwtSettings = jwtSettings;
         _jwtSecurityTokenHandler = jwtSecurityTokenHandler;
     }
 
-    public Task<string> GenerateAsync(AppUser user)
+    public void Validate(string refreshToken, TokenValidationParameters validationParameters)
+    {
+        if (refreshToken is null) throw new ArgumentNullException($"{refreshToken} cant be null.");
+        try
+        {
+            _jwtSecurityTokenHandler.ValidateToken(refreshToken, validationParameters, out SecurityToken validatedToken);
+        }
+        catch (ArgumentNullException ex)
+        {
+            throw new HttpResponseException(HttpStatusCode.BadRequest, ex.Message);
+        }
+        catch (Exception ex)
+        {
+            throw new HttpResponseException(HttpStatusCode.Unauthorized, ex.Message);
+        }
+    }
+
+    public string Generate(string secretKey, double expires, IEnumerable<Claim>? claims = null)
+    {
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
+        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+        SecurityTokenDescriptor tokenDescriptor = MappingProfiles.Map(claims, expires, credentials);
+
+        var token = _jwtSecurityTokenHandler.CreateToken(tokenDescriptor);
+
+        return _jwtSecurityTokenHandler.WriteToken(token);
+    }
+
+    public abstract Task<string> GenerateAsync(AppUser user);
+}
+
+
+
+
+
+internal class AccessTokenService : TokenService, IAccessTokenService
+{
+    private readonly JwtSettings _jwtSettings;
+
+    public AccessTokenService(JwtSettings jwtSettings, JwtSecurityTokenHandler jwtSecurityTokenHandler) : base(jwtSecurityTokenHandler)
+    {
+        _jwtSettings = jwtSettings;
+    }
+
+    public override Task<string> GenerateAsync(AppUser user)
     {
         List<Claim> claims = new()
         {
@@ -28,26 +76,28 @@ internal class AccessTokenService : IAccessTokenService
             new Claim(ClaimTypes.Email, user.Email),
             new Claim(ClaimTypes.Name, user.UserName),
         };
-        return Task.FromResult(_jwtSecurityTokenHandler.GenerateToken(_jwtSettings.TokenKey, _jwtSettings.TokenValidityInMinutes, claims));
+        return Task.FromResult(Generate(_jwtSettings.TokenKey, _jwtSettings.TokenValidityInMinutes, claims));
     }
 }
 
-internal class RefreshTokenService : RepositoryBusinessBase, IRefreshTokenService
+
+
+
+
+internal class RefreshTokenService : TokenService, IRefreshTokenService
 {
     private readonly IRefreshTokenRepository _refreshTokenRepository;
-    private readonly JwtSecurityTokenHandler _jwtSecurityTokenHandler;
     private readonly JwtSettings _jwtSettings;
 
-    public RefreshTokenService(JwtSettings jwtSettings, IRefreshTokenRepository refreshTokenRepository, JwtSecurityTokenHandler jwtSecurityTokenHandler)
+    public RefreshTokenService(JwtSettings jwtSettings, IRefreshTokenRepository refreshTokenRepository, JwtSecurityTokenHandler jwtSecurityTokenHandler) : base(jwtSecurityTokenHandler)
     {
         _refreshTokenRepository = refreshTokenRepository;
         _jwtSettings = jwtSettings;
-        _jwtSecurityTokenHandler = jwtSecurityTokenHandler;
     }
 
-    public async Task<string> GenerateAsync(AppUser user)
+    public override async Task<string> GenerateAsync(AppUser user)
     {
-        var refreshToken = _jwtSecurityTokenHandler.GenerateToken(_jwtSettings.RefreshTokenKey, _jwtSettings.RefreshTokenValidityInMinutes);
+        var refreshToken = Generate(_jwtSettings.RefreshTokenKey, _jwtSettings.RefreshTokenValidityInMinutes);
         await _refreshTokenRepository.AddRefreshTokenAsync(refreshToken, user.Id);
         return refreshToken;
     }
@@ -56,8 +106,10 @@ internal class RefreshTokenService : RepositoryBusinessBase, IRefreshTokenServic
         => await GetAsync(_refreshTokenRepository.GetRefreshTokenByRequestRefreshTokenAsync, requestRefreshToken);
 
     public async Task RemoveRefreshTokenAsync(RefreshToken refreshToken)
-        => await _refreshTokenRepository.RemoveRefreshTokenAsync(refreshToken);
-
+    {
+        if(refreshToken is null) throw new ArgumentNullException(nameof(refreshToken) + " can't be null.");
+        await _refreshTokenRepository.RemoveRefreshTokenAsync(refreshToken);
+    }
     public void Validate(string refreshToken)
-        => _jwtSecurityTokenHandler.ValidateToken(refreshToken, _jwtSettings.TokenValidationParameters);
+        => Validate(refreshToken, _jwtSettings.TokenValidationParameters);
 }
