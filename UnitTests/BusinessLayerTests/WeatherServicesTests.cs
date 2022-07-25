@@ -123,5 +123,4 @@ public class WeatherServicesTests
         // Assert
         Assert.NotNull(result);
     }
-
 }

@@ -56,7 +56,6 @@ public class RefreshTokenServiceTests
 
         // Assert
         Assert.ThrowsAsync<NullReferenceException>(() => action.Invoke());
-
     }
 
     [Test]
@@ -129,7 +128,6 @@ public class RefreshTokenServiceTests
 
         // Assert
         Assert.ThrowsAsync<ArgumentNullException>(() => action.Invoke());
-
     }
 
     [Test]
@@ -147,7 +145,6 @@ public class RefreshTokenServiceTests
 
         // Assert
         Assert.DoesNotThrowAsync(() => action.Invoke());
-
     }
 
     [Test]

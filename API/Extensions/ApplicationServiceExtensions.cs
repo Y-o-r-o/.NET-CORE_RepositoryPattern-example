@@ -1,6 +1,4 @@
 using BusinessLayer.BusinessServices.DependencyInjections;
-using RepositoryLayer.Repositories.DependencyInjections;
-using ServiceClientLayer.DependencyInjections;
 using System.Text.Json.Serialization;
 
 namespace API.Extensions;
@@ -16,9 +14,7 @@ public static class ApplicationServiceExtensions
         services.AddEndpointsApiExplorer()
                 .AddSwaggerExtensions();
 
-        services.AddServiceClientServices()
-                .AddRepositoryServices(config)
-                .AddBusinessServices();
+        services.AddBusinessServices(config);
 
         return services;
     }

@@ -13,8 +13,6 @@ using System.Text;
 
 namespace BusinessLayer.BusinessServices;
 
-
-
 internal abstract class TokenService : RepositoryBusinessBase, ITokenService
 {
     protected readonly JwtSecurityTokenHandler _jwtSecurityTokenHandler;
@@ -55,10 +53,6 @@ internal abstract class TokenService : RepositoryBusinessBase, ITokenService
     public abstract Task<string> GenerateAsync(AppUser user);
 }
 
-
-
-
-
 internal class AccessTokenService : TokenService, IAccessTokenService
 {
     private readonly JwtSettings _jwtSettings;
@@ -79,10 +73,6 @@ internal class AccessTokenService : TokenService, IAccessTokenService
         return Task.FromResult(Generate(_jwtSettings.TokenKey, _jwtSettings.TokenValidityInMinutes, claims));
     }
 }
-
-
-
-
 
 internal class RefreshTokenService : TokenService, IRefreshTokenService
 {
@@ -107,9 +97,10 @@ internal class RefreshTokenService : TokenService, IRefreshTokenService
 
     public async Task RemoveRefreshTokenAsync(RefreshToken refreshToken)
     {
-        if(refreshToken is null) throw new ArgumentNullException(nameof(refreshToken) + " can't be null.");
+        if (refreshToken is null) throw new ArgumentNullException(nameof(refreshToken) + " can't be null.");
         await _refreshTokenRepository.RemoveRefreshTokenAsync(refreshToken);
     }
+
     public void Validate(string refreshToken)
         => Validate(refreshToken, _jwtSettings.TokenValidationParameters);
 }

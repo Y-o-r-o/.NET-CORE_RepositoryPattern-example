@@ -1,19 +1,23 @@
 ﻿using BusinessLayer.Interfaces;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using RepositoryLayer.Repositories.DependencyInjections;
 
 namespace BusinessLayer.BusinessServices.DependencyInjections;
 
 public static class BusinessServicesExtensions
 {
-    public static IServiceCollection AddBusinessServices(this IServiceCollection services)
+    public static IServiceCollection AddBusinessServices(this IServiceCollection services, IConfiguration config)
     {
+        services.AddRepositoryServices(config);
+
         services.AddIdentityServices();
 
-        services.AddScoped<IWeatherServices, WeatherServices>();
-        services.AddScoped<IRefreshTokenService, RefreshTokenService>();
-        services.AddScoped<IAccessTokenService, AccessTokenService>();
-        services.AddScoped<IAuthenticateService, AuthenticateService>();
-        services.AddScoped<IUserServices, UserServices>();
+        services.AddScoped<IWeatherServices, WeatherServices>()
+            .AddScoped<IRefreshTokenService, RefreshTokenService>()
+            .AddScoped<IAccessTokenService, AccessTokenService>()
+            .AddScoped<IAuthenticateService, AuthenticateService>()
+            .AddScoped<IUserServices, UserServices>();
 
         return services;
     }

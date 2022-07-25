@@ -21,8 +21,6 @@ public static class SwaggerServicesExtensions
             var businesLayerDocumentationPath = Path.Combine(AppContext.BaseDirectory, "BusinessLayer.xml");
             config.IncludeXmlComments(businesLayerDocumentationPath);
 
-            config.SchemaFilter<EnumSchemaFilter>();
-
             config.AddSecurityDefinition("access", new OpenApiSecurityScheme()
             {
                 Description = "Access token",

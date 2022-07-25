@@ -8,6 +8,7 @@ public class MappingProfiles
     { }
 
     private static readonly MappingProfiles _instance = new MappingProfiles();
+
     public static MappingProfiles Instance
     { get { return _instance; } }
 

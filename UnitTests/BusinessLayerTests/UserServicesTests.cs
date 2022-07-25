@@ -1,13 +1,9 @@
 ﻿using BusinessLayer.BusinessServices;
 using BusinessLayer.DTOs;
 using Core;
-using Moq;
-using NUnit.Framework;
 using RepositoryLayer.Databases.Entities;
 using RepositoryLayer.Interfaces;
-using System;
 using System.Net;
-using System.Threading.Tasks;
 using UnitTests.BusinessLayerTests.ArrangeBusinessLayerUnitTests;
 
 namespace UnitTests.BusinessLayerTests
@@ -27,7 +23,6 @@ namespace UnitTests.BusinessLayerTests
             _mockUserRepository = mockRepository.Create<IUserRepository>();
         }
 
-
         private UserServices InitializeTestingObj()
         {
             return new UserServices(
@@ -36,7 +31,7 @@ namespace UnitTests.BusinessLayerTests
         }
 
         [Test]
-        public void GetUserAsync_GiveNullId_ExpectNotFoundException()
+        public void GetUserAsync_GiveNullIdParam_ExpectNotFoundException()
         {
             // Arrange
             _mockUserRepository.Setup(m => m
@@ -54,7 +49,6 @@ namespace UnitTests.BusinessLayerTests
             Assert.That(exception.StatusCode.Equals(HttpStatusCode.NotFound));
         }
 
-
         [Test]
         public async Task GetUsersAsync_CallMethod_GivesExpectedValues()
         {
@@ -70,6 +64,5 @@ namespace UnitTests.BusinessLayerTests
             Assert.IsTrue(result.Any(u => u.DisplayName.Equals("DziugDziug")));
             Assert.IsTrue(result.Any(u => u.DisplayName.Equals("LukLuk")));
         }
-
     }
 }

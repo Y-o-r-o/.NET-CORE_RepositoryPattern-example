@@ -1,6 +1,7 @@
 ﻿using RepositoryLayer.Databases.Entities;
 
 namespace UnitTests.BusinessLayerTests.ArrangeBusinessLayerUnitTests;
+
 public static class ArrangeUsers
 {
     public static List<AppUser> Users()

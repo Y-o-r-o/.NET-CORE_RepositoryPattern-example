@@ -32,9 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RepositoryLayer\RepositoryLayer.csproj" />
     <ProjectReference Include="..\BusinessLayer\BusinessLayer.csproj" />
-    <ProjectReference Include="..\ServiceClientLayer\ServiceClientLayer.csproj" />
     <ProjectReference Include="..\Core\Core.csproj" />
   </ItemGroup>
 

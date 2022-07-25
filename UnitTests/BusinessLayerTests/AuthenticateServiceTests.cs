@@ -3,13 +3,9 @@ using BusinessLayer.DTOs;
 using BusinessLayer.Interfaces;
 using Core;
 using Microsoft.AspNetCore.Identity;
-using Moq;
-using NUnit.Framework;
 using RepositoryLayer.Databases.Entities;
 using RepositoryLayer.Interfaces;
-using System;
 using System.Net;
-using System.Threading.Tasks;
 using UnitTests.BusinessLayerTests.ArrangeBusinessLayerUnitTests;
 
 namespace UnitTests.BusinessLayerTests

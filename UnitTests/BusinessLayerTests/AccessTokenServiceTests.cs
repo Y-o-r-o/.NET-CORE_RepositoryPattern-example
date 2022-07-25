@@ -1,10 +1,8 @@
 ﻿using BusinessLayer.BusinessServices;
 using BusinessLayer.Settings;
-using Core.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using RepositoryLayer.Databases.Entities;
 using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using UnitTests.BusinessLayerTests.ArrangeBusinessLayerUnitTests;
 
 namespace UnitTests.BusinessLayerTests
@@ -30,7 +28,7 @@ namespace UnitTests.BusinessLayerTests
         {
             _mockJwtSettings.Object.RefreshTokenKey = "SecretKey";
             _mockJwtSettings.Object.TokenKey = "SecretKey";
-            
+
             return new AccessTokenService(
                 _mockJwtSettings.Object,
                 _mockJwtSecurityTokenHandler.Object);
@@ -48,7 +46,6 @@ namespace UnitTests.BusinessLayerTests
 
             // Assert
             Assert.ThrowsAsync<NullReferenceException>(() => action.Invoke());
-
         }
 
         [Test]
