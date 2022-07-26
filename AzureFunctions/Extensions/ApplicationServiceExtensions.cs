@@ -1,7 +1,4 @@
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Features.Authentication;
-using Microsoft.AspNetCore.Mvc;
+using BusinessLayer.BusinessServices.DependencyInjections;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,6 +12,8 @@ public static class ApplicationServiceExtensions
 
         services.AddHttpContextAccessor();
         services.AddSwaggerServices();
+
+        services.AddBusinessServices(config);
 
         return services;
     }

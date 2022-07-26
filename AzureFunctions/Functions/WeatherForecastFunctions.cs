@@ -9,9 +9,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
-using System.Net;
-
-using Microsoft.OpenApi.Models;
 
 namespace AzureFunctions.Functions;
 
@@ -20,16 +17,15 @@ public class WeatherForecastFunctions : BaseFunction
 {
     private readonly IWeatherServices _weatherServices;
 
-    public WeatherForecastFunctions()//IWeatherServices weatherServices)
+    public WeatherForecastFunctions(IWeatherServices weatherServices)
     {
-        //        _weatherServices = weatherServices;
+        _weatherServices = weatherServices;
     }
 
     /// <summary>Gets a temperature in celsius by cordinates.</summary>
     /// <returns>got temperature in celsius.</returns>
-    
     [Function("GetTemperatureFromCordinates")]
-    [ProducesResponseType(typeof(MainForecastDTO), 200)]
+    [ProducesResponseType(typeof(ActionResult<MainForecastDTO>), 200)]
     [QueryStringParameter("City", "The city to get temperature from", "Vilnius", DataType = typeof(CordinatesDTO), Required = true)]
     public async Task<IActionResult> GetTemperatureFromCordinatesAsync(
         [HttpTrigger("get", Route = "WeatherForecast/FromCordinates")] HttpRequestData req)
@@ -41,16 +37,15 @@ public class WeatherForecastFunctions : BaseFunction
 
     /// <summary>Gets a temperature in celsius by city name.</summary>
     /// <returns>got temperature in celsius.</returns>
-    [ProducesResponseType(typeof(MainForecastDTO), 200)]
+    [ProducesResponseType(typeof(ActionResult<MainForecastDTO>), 200)]
     [Function("GetTemperatureFromCity")]
     [QueryStringParameter("City", "The city to get temperature from", "Vilnius", DataType = typeof(City), Required = true)]
     public async Task<IActionResult> GetTemperatureFromCityAsync(
         [HttpTrigger("get", Route = "WeatherForecast/FromCity")] HttpRequestData req)
     {
-        var cit2y = await req.Body.DeserializeAsync<City>();
+        var queryValue = req.QueryDictionary()["City"];
+        var city = (City)Enum.Parse(typeof(City), queryValue);
 
-        return null;
-        //return HandleResult(await _weatherServices.GetWeatherAsync(city));
+        return HandleResult(await _weatherServices.GetWeatherAsync(city));
     }
-
 }

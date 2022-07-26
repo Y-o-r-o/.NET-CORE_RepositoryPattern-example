@@ -12,7 +12,8 @@ public class EnumSchemaFilter : ISchemaFilter
     {
         if (schema.Enum.Any())
         {
-            var schemaType = Assembly.GetAssembly(typeof(City)).GetTypes().Single(t => t.Name == context.Type.Name);
+            Type? schemaType = Assembly.GetAssembly(typeof(City)).GetTypes().SingleOrDefault(t => t.Name == context.Type.Name);
+            if (schemaType is null) return;
             schema.Enum = Enum.GetNames(schemaType)
                 .Select(name => new OpenApiString(name))
                 .Cast<IOpenApiAny>()

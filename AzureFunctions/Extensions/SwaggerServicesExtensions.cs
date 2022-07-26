@@ -6,11 +6,10 @@ using Microsoft.OpenApi;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 
-
 namespace AzureFunctions.Extensions;
+
 public static class SwaggerServicesExtensions
 {
-
     public static IServiceCollection AddSwaggerServices(this IServiceCollection services)
     {
         services.AddSwashBuckle(Assembly.GetExecutingAssembly(), swagDoc =>
@@ -55,5 +54,4 @@ public static class SwaggerServicesExtensions
         });
         return services;
     }
-
 }
