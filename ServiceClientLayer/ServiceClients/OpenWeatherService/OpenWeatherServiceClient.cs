@@ -32,6 +32,7 @@ public class OpenWeatherServiceClient : IOpenWeatherServiceClient
             throw new ArgumentException($"Longtitude out of range. Range must be >={MAXIMUM_VALID_LONGTITUDE} and <={MINIMUM_VALID_LONGTITUDE}. Given: {longtitude}");
         }
 
+
         if (_apiKey is null) throw new Exception("Missing api key.");
 
         var parameters = new List<(string, string)>(){

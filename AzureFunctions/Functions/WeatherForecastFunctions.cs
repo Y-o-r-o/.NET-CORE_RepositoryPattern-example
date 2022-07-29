@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
+using Microsoft.IdentityModel.Tokens;
 
 namespace AzureFunctions.Functions;
 
@@ -28,7 +29,7 @@ public class WeatherForecastFunctions : BaseFunction
     [ProducesResponseType(typeof(ActionResult<MainForecastDTO>), 200)]
     [QueryStringParameter("City", "The city to get temperature from", "Vilnius", DataType = typeof(CordinatesDTO), Required = true)]
     public async Task<IActionResult> GetTemperatureFromCordinatesAsync(
-        [HttpTrigger("get", Route = "WeatherForecast/FromCordinates")] HttpRequestData req)
+        [HttpTrigger(AuthorizationLevel.Function, "get", Route = "WeatherForecast/FromCordinates")] HttpRequestData req)
     {
         var cordinates = await req.Body.DeserializeAsync<CordinatesDTO>();
 
@@ -41,7 +42,7 @@ public class WeatherForecastFunctions : BaseFunction
     [Function("GetTemperatureFromCity")]
     [QueryStringParameter("City", "The city to get temperature from", "Vilnius", DataType = typeof(City), Required = true)]
     public async Task<IActionResult> GetTemperatureFromCityAsync(
-        [HttpTrigger("get", Route = "WeatherForecast/FromCity")] HttpRequestData req)
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "WeatherForecast/FromCity")] HttpRequestData req)
     {
         var queryValue = req.QueryDictionary()["City"];
         var city = (City)Enum.Parse(typeof(City), queryValue);
