@@ -399,7 +399,7 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # VSCode, c# folders
-.vscode/
+
 bin/
 obj/
 
@@ -507,3 +507,9 @@ $RECYCLE.BIN/
     About
 
 Loading complete
+.vscode/launch.json
+.vscode/extensions.json
+.gitignore
+.vscode/tasks.json
+AzureFunctions/.vscode/extensions.json
+.vscode/settings.json
