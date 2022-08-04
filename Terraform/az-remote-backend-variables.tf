@@ -9,7 +9,7 @@ variable "company" {
 variable "environment" {
   type        = string
   description = "This variable defines the environment to be built"
-  default     = "dev"
+  default     = "Development"
 }
 
 # azure region
