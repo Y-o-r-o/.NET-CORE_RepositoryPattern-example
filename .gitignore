@@ -513,3 +513,9 @@ Loading complete
 .vscode/tasks.json
 AzureFunctions/.vscode/extensions.json
 .vscode/settings.json
+
+
+*.tfvars
+*.tfstate
+*.conf
+*x5.exe
