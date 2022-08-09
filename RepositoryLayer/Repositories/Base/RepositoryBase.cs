@@ -13,9 +13,11 @@ internal abstract class RepositoryBase
         _cache = cache;
     }
 
-    public async Task<TResponse> HandleCache<TResponse>(Func<Task<TResponse>> GetAsync, CacheParams cacheParams)
+    public async Task<TResponse?> HandleCaching<TResponse>(Func<Task<TResponse?>> GetAsync, CacheParams? cacheParams)
         where TResponse : class
     {
+        if (cacheParams is null) return await GetAsync();
+
         var response = await _cache.Get<TResponse>(cacheParams.Key);
 
         if(response is null)

@@ -12,12 +12,13 @@ internal abstract class ServiceClientRepositoryBase<TEntity> : RepositoryBase
     public virtual async Task<TEntity?> GetAsync<TServiceClientEntity>(Func<Task<Result<TServiceClientEntity>>> ServiceClientGetAsync, CacheParams? cacheParams = null)
          where TServiceClientEntity : class, new()
         => (cacheParams is null) ? ProcessGetResponseAsync(await ServiceClientGetAsync())
-            : ProcessGetResponseAsync(await HandleCache(ServiceClientGetAsync, cacheParams));
+            : ProcessGetResponseAsync(await HandleCaching(ServiceClientGetAsync, cacheParams));
 
 
-    private TEntity? ProcessGetResponseAsync<TServiceClientEntity>(Result<TServiceClientEntity> response)
+    private static TEntity? ProcessGetResponseAsync<TServiceClientEntity>(Result<TServiceClientEntity>? response)
          where TServiceClientEntity : class, new()
     {
+        if(response is null) throw new Exception("Result cant be null.");
         if (response.Value is null) throw new Exception("Couldn't get response value.");
 
         TEntity? entity = null;

@@ -26,7 +26,7 @@ public class Cache
         );
     }
 
-    public async Task Set<T> (string key, T value, DistributedCacheEntryOptions options) 
+    public async Task Set<T> (string key, T? value, DistributedCacheEntryOptions options) 
         where T : class
     {
         var response = JsonConvert.SerializeObject(value, new JsonSerializerSettings()

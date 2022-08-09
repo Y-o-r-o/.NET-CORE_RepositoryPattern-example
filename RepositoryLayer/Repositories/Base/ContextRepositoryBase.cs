@@ -18,13 +18,15 @@ internal abstract class ContextRepositoryBase<TEntity> : RepositoryBase
         Entities = context.Set<TEntity>();
     }
 
-    public virtual async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate)
-        => await Entities.FirstOrDefaultAsync(predicate);
-
-    public virtual async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>>? predicate = null)
+    public virtual async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate, CacheParams? cacheParams = null)
     {
-        if (predicate is null) return await Entities.ToListAsync();
-        return await Entities.Where(predicate).ToListAsync();
+        return await HandleCaching(() => Entities.FirstOrDefaultAsync(predicate), cacheParams);
+    }
+
+    public virtual async Task<IEnumerable<TEntity?>> GetAllAsync(Expression<Func<TEntity, bool>>? predicate = null, CacheParams? cacheParams = null)
+    {
+        if (predicate is null) return await HandleCaching(() => Entities.ToListAsync(), cacheParams);
+        return await HandleCaching(() => Entities.Where(predicate).ToListAsync(), cacheParams);
     }
 
     public virtual async Task<bool> RemoveAsync(TEntity entity)
