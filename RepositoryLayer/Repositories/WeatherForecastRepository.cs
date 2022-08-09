@@ -1,3 +1,4 @@
+using RepositoryLayer.Databases.Cache;
 using RepositoryLayer.Interfaces;
 using RepositoryLayer.Models;
 using RepositoryLayer.Repositories.Base;
@@ -9,11 +10,15 @@ internal class WeatherForecastRepository : ServiceClientRepositoryBase<WeatherFo
 {
     private IOpenWeatherServiceClient _openWeatherServiceClient;
 
-    public WeatherForecastRepository(IOpenWeatherServiceClient openWeatherServiceClient)
+    public WeatherForecastRepository(IOpenWeatherServiceClient openWeatherServiceClient, Cache cache) : base(cache)
     {
         _openWeatherServiceClient = openWeatherServiceClient;
     }
 
     public async Task<WeatherForecast?> GetWeatherAsync(double latitude, double longtitude)
-        => await GetAsync(_openWeatherServiceClient.GetTemperatureAsync, latitude, longtitude);
+        => await GetAsync(() => _openWeatherServiceClient.GetTemperatureAsync(latitude, longtitude));
+
+    public async Task<WeatherForecast?> GetCachedWeatherAsync(double latitude, double longtitude)
+        => await GetCachedAsync(() => _openWeatherServiceClient.GetTemperatureAsync(latitude, longtitude), new());
+
 }

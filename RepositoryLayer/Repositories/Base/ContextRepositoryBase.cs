@@ -1,17 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RepositoryLayer.Databases.Cache;
 using RepositoryLayer.Databases.Configuration;
 using System.Linq.Expressions;
 
 namespace RepositoryLayer.Repositories.Base;
 
-internal abstract class ContextRepositoryBase<TEntity>
+internal abstract class ContextRepositoryBase<TEntity> : RepositoryBase
     where TEntity : class
 {
     protected readonly DataContext _context;
 
     protected IQueryable<TEntity> Entities { get; set; }
 
-    protected ContextRepositoryBase(DataContext context)
+    protected ContextRepositoryBase(DataContext context, Cache cache) : base(cache)
     {
         _context = context;
         Entities = context.Set<TEntity>();
