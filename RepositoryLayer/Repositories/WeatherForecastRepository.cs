@@ -19,6 +19,6 @@ internal class WeatherForecastRepository : ServiceClientRepositoryBase<WeatherFo
         => await GetAsync(() => _openWeatherServiceClient.GetTemperatureAsync(latitude, longtitude));
 
     public async Task<WeatherForecast?> GetCachedWeatherAsync(double latitude, double longtitude)
-        => await GetCachedAsync(() => _openWeatherServiceClient.GetTemperatureAsync(latitude, longtitude), new());
+        => await GetAsync(() => _openWeatherServiceClient.GetTemperatureAsync(latitude, longtitude), new());
 
 }

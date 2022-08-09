@@ -11,13 +11,9 @@ internal abstract class ServiceClientRepositoryBase<TEntity> : RepositoryBase
 
     public virtual async Task<TEntity?> GetAsync<TServiceClientEntity>(Func<Task<Result<TServiceClientEntity>>> ServiceClientGetAsync, CacheParams? cacheParams = null)
          where TServiceClientEntity : class, new()
-    {
-        if (cacheParams is null)
-        {
-            return ProcessGetResponseAsync(await ServiceClientGetAsync());
-        }
-        return ProcessGetResponseAsync(await HandleCache(ServiceClientGetAsync, cacheParams));
-    }
+        => (cacheParams is null) ? ProcessGetResponseAsync(await ServiceClientGetAsync())
+            : ProcessGetResponseAsync(await HandleCache(ServiceClientGetAsync, cacheParams));
+
 
     private TEntity? ProcessGetResponseAsync<TServiceClientEntity>(Result<TServiceClientEntity> response)
          where TServiceClientEntity : class, new()
@@ -30,9 +26,9 @@ internal abstract class ServiceClientRepositoryBase<TEntity> : RepositoryBase
         {
             entity = MappingProfiles.TryMap<TServiceClientEntity, TEntity>(response.Value);
         }
-        
+
         //TO DO: If respone is failure then maybe log failure?
-        
+
         return entity;
     }
 }
