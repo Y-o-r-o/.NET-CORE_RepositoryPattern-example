@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using RepositoryLayer.Databases.Cache;
 using RepositoryLayer.Databases.Configuration;
 using RepositoryLayer.Databases.Entities;
 using RepositoryLayer.Interfaces;
@@ -10,7 +11,7 @@ internal class UserRepository : ContextRepositoryBase<AppUser>, IUserRepository
 {
     private readonly SignInManager<AppUser> _signInManager;
 
-    public UserRepository(DataContext context, SignInManager<AppUser> signInManager) : base(context)
+    public UserRepository(DataContext context, SignInManager<AppUser> signInManager, CacheFactory cacheFactory) : base(context, cacheFactory)
     {
         _signInManager = signInManager;
     }

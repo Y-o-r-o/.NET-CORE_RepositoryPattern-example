@@ -12,7 +12,7 @@ internal abstract class ContextRepositoryBase<TEntity> : RepositoryBase
 
     protected IQueryable<TEntity> Entities { get; set; }
 
-    protected ContextRepositoryBase(DataContext context, Cache cache) : base(cache)
+    protected ContextRepositoryBase(DataContext context, CacheFactory cacheFactory) : base(cacheFactory)
     {
         _context = context;
         Entities = context.Set<TEntity>();

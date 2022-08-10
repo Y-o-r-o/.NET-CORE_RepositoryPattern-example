@@ -1,4 +1,5 @@
-﻿using RepositoryLayer.Interfaces;
+﻿using RepositoryLayer.Databases.Cache;
+using RepositoryLayer.Interfaces;
 using RepositoryLayer.Models;
 using RepositoryLayer.Repositories.Base;
 using ServiceClientLayer.ServiceClients.OpenWeatherService;
@@ -9,22 +10,12 @@ internal class GeocodeRepository : ServiceClientRepositoryBase<Geocode>, IGeocod
 {
     private IGoogleMapsServiceClient _googleMapsServiceClient;
 
-    public GeocodeRepository(IGoogleMapsServiceClient googleMapsServiceClient)
+    public GeocodeRepository(IGoogleMapsServiceClient googleMapsServiceClient, CacheFactory cacheFactory) : base(cacheFactory)
     {
         _googleMapsServiceClient = googleMapsServiceClient;
     }
 
     public async Task<Geocode?> GetGeocodeByCityNameAsync(string city)
-        => await GetAsync(_googleMapsServiceClient.GetCordinatesAsync, city);
+        => await GetAsync(() => _googleMapsServiceClient.GetCordinatesAsync(city));
 
-    //public async Task<Location> GetLocationByCityName(string city)
-    //{
-    //    var googleMapsResponse = await _googleMapsServiceClient.GetCordinates(city);
-    //    Location location = null;
-    //    if (googleMapsResponse.IsSuccess)
-    //    {
-    //        location = MappingProfiles.Map(googleMapsResponse.Value).Results[0].Geometry.Location;
-    //    }
-    //    return location;
-    //}
 }

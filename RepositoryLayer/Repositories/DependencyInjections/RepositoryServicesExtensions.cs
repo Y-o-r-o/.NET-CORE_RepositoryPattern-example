@@ -1,3 +1,4 @@
+using EasyCaching.Core.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,7 +18,10 @@ public static class RepositoryServicesExtensions
         services.AddDbContext<DataContext>(options => options.UseSqlServer(config.GetConnectionString("Context")));
 
         services.AddStackExchangeRedisCache(options => options.Configuration = config.GetConnectionString("RedisCache"));
-        services.AddScoped<Cache>();
+        services.AddMemoryCache();
+        services.AddScoped<DistributedCache>();
+        services.AddScoped<MemoryCache>();
+        services.AddScoped<CacheFactory>();
 
         services.AddScoped<IWeatherForecastRepository, WeatherForecastRepository>()
             .AddScoped<IUserRepository, UserRepository>()

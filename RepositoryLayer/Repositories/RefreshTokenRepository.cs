@@ -1,4 +1,5 @@
-﻿using RepositoryLayer.Databases.Configuration;
+﻿using RepositoryLayer.Databases.Cache;
+using RepositoryLayer.Databases.Configuration;
 using RepositoryLayer.Databases.Entities;
 using RepositoryLayer.Repositories.Base;
 
@@ -6,7 +7,7 @@ namespace RepositoryLayer.Repositories;
 
 internal class RefreshTokenRepository : ContextRepositoryBase<RefreshToken>, IRefreshTokenRepository
 {
-    public RefreshTokenRepository(DataContext context) : base(context)
+    public RefreshTokenRepository(DataContext context, CacheFactory cacheFactory) : base(context, cacheFactory)
     {
         Entities = context.Set<RefreshToken>();
     }

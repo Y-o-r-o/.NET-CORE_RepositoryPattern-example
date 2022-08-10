@@ -7,7 +7,7 @@ namespace RepositoryLayer.Repositories.Base;
 internal abstract class ServiceClientRepositoryBase<TEntity> : RepositoryBase
     where TEntity : class, new()
 {
-    protected ServiceClientRepositoryBase(Cache cache) : base(cache) { }
+    protected ServiceClientRepositoryBase(CacheFactory cacheFactory) : base(cacheFactory) { }
 
     public virtual async Task<TEntity?> GetAsync<TServiceClientEntity>(Func<Task<Result<TServiceClientEntity>>> ServiceClientGetAsync, CacheParams? cacheParams = null)
          where TServiceClientEntity : class, new()
@@ -22,7 +22,6 @@ internal abstract class ServiceClientRepositoryBase<TEntity> : RepositoryBase
         if (response.Value is null) throw new Exception("Couldn't get response value.");
 
         TEntity? entity = null;
-
         if (response.IsSuccess)
         {
             entity = MappingProfiles.TryMap<TServiceClientEntity, TEntity>(response.Value);

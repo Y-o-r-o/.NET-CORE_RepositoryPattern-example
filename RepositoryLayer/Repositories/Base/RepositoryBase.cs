@@ -1,4 +1,3 @@
-using Microsoft.Extensions.Caching.Distributed;
 using RepositoryLayer.Databases.Cache;
 
 namespace RepositoryLayer.Repositories.Base;
@@ -6,27 +5,26 @@ namespace RepositoryLayer.Repositories.Base;
 internal abstract class RepositoryBase
 {
 
-    private readonly Cache _cache;
+    private readonly CacheFactory _cacheFactory;
 
-    protected RepositoryBase(Cache cache)
+    protected RepositoryBase(CacheFactory cacheFactory)
     {
-        _cache = cache;
+        _cacheFactory = cacheFactory;
     }
 
     public async Task<TResponse?> HandleCaching<TResponse>(Func<Task<TResponse?>> GetAsync, CacheParams? cacheParams)
         where TResponse : class
     {
+        var cache = _cacheFactory.GetCacheService(cacheParams.CachingService); 
+
         if (cacheParams is null) return await GetAsync();
 
-        var response = await _cache.Get<TResponse>(cacheParams.Key);
+        var response = await cache.Get<TResponse>(cacheParams.Key);
 
         if(response is null)
         {
             response = await GetAsync();
-            await _cache.Set(cacheParams.Key, response, new DistributedCacheEntryOptions
-            (
-                //TO DO..
-            ));
+            await cache.Set(response, cacheParams);
         }
 
         return response;

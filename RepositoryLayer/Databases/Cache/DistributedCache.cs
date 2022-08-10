@@ -1,13 +1,14 @@
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 
+
 namespace RepositoryLayer.Databases.Cache;
 
-public class Cache
+public class DistributedCache : ICache
 {
     private readonly IDistributedCache _cache; 
 
-    public Cache(IDistributedCache cache)
+    public DistributedCache(IDistributedCache cache)
     {
         _cache = cache;
     }
@@ -26,7 +27,7 @@ public class Cache
         );
     }
 
-    public async Task Set<T> (string key, T? value, DistributedCacheEntryOptions options) 
+    public async Task Set<T> (T? value, CacheParams cacheParams) 
         where T : class
     {
         var response = JsonConvert.SerializeObject(value, new JsonSerializerSettings()
@@ -34,7 +35,11 @@ public class Cache
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore
         });
 
-        await _cache.SetStringAsync(key, response, options);
+        await _cache.SetStringAsync(cacheParams.Key, response, new DistributedCacheEntryOptions(){
+            SlidingExpiration = cacheParams.SlidingExpiration,
+            AbsoluteExpiration = cacheParams.AbsoluteExpiration,
+            AbsoluteExpirationRelativeToNow = cacheParams.AbsoluteExpirationRelativeToNow
+        });
     }
 
     public async Task Clear(string key)

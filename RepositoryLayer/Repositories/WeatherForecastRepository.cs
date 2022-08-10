@@ -10,15 +10,17 @@ internal class WeatherForecastRepository : ServiceClientRepositoryBase<WeatherFo
 {
     private IOpenWeatherServiceClient _openWeatherServiceClient;
 
-    public WeatherForecastRepository(IOpenWeatherServiceClient openWeatherServiceClient, Cache cache) : base(cache)
+    public WeatherForecastRepository(IOpenWeatherServiceClient openWeatherServiceClient, CacheFactory cacheFactory) : base(cacheFactory)
     {
         _openWeatherServiceClient = openWeatherServiceClient;
     }
 
     public async Task<WeatherForecast?> GetWeatherAsync(double latitude, double longtitude)
         => await GetAsync(() => _openWeatherServiceClient.GetTemperatureAsync(latitude, longtitude));
-
-    public async Task<WeatherForecast?> GetCachedWeatherAsync(double latitude, double longtitude)
-        => await GetAsync(() => _openWeatherServiceClient.GetTemperatureAsync(latitude, longtitude), new());
+        // new($"GetCachedWeatherAsync_{latitude}_{longtitude}")
+        // {
+        //     AbsoluteExpiration = new DateTimeOffset().AddMinutes(5),
+        //     CachingService = CachingService.Redis
+        // });
 
 }
