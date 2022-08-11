@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\Unit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureFunctions", "AzureFunctions\AzureFunctions.csproj", "{C66D562F-08A6-4251-8D71-2AF4F7306F93}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreWCFDemoServer", "CoreWCFDemoServer\CoreWCFDemoServer.csproj", "{C54D3256-81E1-41EA-BC1A-705E0914D3A4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{C66D562F-08A6-4251-8D71-2AF4F7306F93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C66D562F-08A6-4251-8D71-2AF4F7306F93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C66D562F-08A6-4251-8D71-2AF4F7306F93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C54D3256-81E1-41EA-BC1A-705E0914D3A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C54D3256-81E1-41EA-BC1A-705E0914D3A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C54D3256-81E1-41EA-BC1A-705E0914D3A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C54D3256-81E1-41EA-BC1A-705E0914D3A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

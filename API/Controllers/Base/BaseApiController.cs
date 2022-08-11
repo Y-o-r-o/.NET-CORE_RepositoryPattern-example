@@ -8,6 +8,7 @@ public class BaseApiController : ControllerBase
 {
     protected ActionResult HandleResult<T>(T result)
     {
+        Controller
         if (result == null) return NotFound();
         return Ok(result);
     }
