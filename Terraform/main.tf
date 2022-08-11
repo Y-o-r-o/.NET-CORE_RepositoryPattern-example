@@ -1,6 +1,13 @@
 # Define Terraform provider
 terraform {
   required_version = ">= 1.2.5"
+  backend "azurerm" {
+    resource_group_name  = "development-rg"
+    storage_account_name = "testinctfo9pooooz"
+    container_name       = "core-tfstate"
+    key                  = "terraform.tfstate"
+    access_key           = "pFfKZf6Plav2bVYB04N4DPJgHm3tLHyPdVWP9tOBTKRLDOpjer3fIEsIfju1fWmAVJ4j/7cJWvEE+ASttT4JaA=="
+  }
 }
 
 # Configure the Azure provider
