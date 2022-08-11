@@ -15,7 +15,7 @@ internal class GeocodeRepository : ServiceClientRepositoryBase<Geocode>, IGeocod
     }
 
     public async Task<Geocode?> GetGeocodeByCityNameAsync(string city)
-        => await GetAsync(_googleMapsServiceClient.GetCordinatesAsync, city);
+        => await GetAsync(() => _googleMapsServiceClient.GetCordinatesAsync(city));
 
     //public async Task<Location> GetLocationByCityName(string city)
     //{
