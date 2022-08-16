@@ -517,5 +517,6 @@ AzureFunctions/.vscode/extensions.json
 
 *.tfvars
 *.tfstate
+*.tfstate.backup
 *.conf
 *x5.exe
