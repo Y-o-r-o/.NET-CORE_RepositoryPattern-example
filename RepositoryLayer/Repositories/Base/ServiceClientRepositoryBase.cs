@@ -5,19 +5,15 @@ namespace RepositoryLayer.Repositories.Base;
 
 internal abstract class ServiceClientRepositoryBase<TEntity> where TEntity : class, new()
 {
-    protected ServiceClientRepositoryBase()
-    { }
+    protected ServiceClientRepositoryBase()    { }
 
-    public virtual async Task<TEntity?> GetAsync<TServiceClientEntity, TParam>(Func<TParam, Task<Result<TServiceClientEntity>>> ServiceClientGetAsync, TParam param)
+    public virtual async Task<TEntity?> GetAsync<TServiceClientEntity>(Func<Task<Result<TServiceClientEntity>>> ServiceClientGetAsync)
          where TServiceClientEntity : class, new()
-        => ProcessGetResponseAsync<TServiceClientEntity>(await ServiceClientGetAsync(param));
+        => ProcessGetResponseAsync(await ServiceClientGetAsync());
 
-    public virtual async Task<TEntity?> GetAsync<TServiceClientEntity, TParam, TParam2>(Func<TParam, TParam2, Task<Result<TServiceClientEntity>>> ServiceClientGetAsync, TParam param, TParam2 param2)
-         where TServiceClientEntity : class, new()
-        => ProcessGetResponseAsync<TServiceClientEntity>(await ServiceClientGetAsync(param, param2));
 
     private TEntity? ProcessGetResponseAsync<TServiceClientEntity>(Result<TServiceClientEntity> response)
-        where TServiceClientEntity : class, new()
+         where TServiceClientEntity : class, new()
     {
         if (response.Value is null) throw new Exception("Couldn't get response value.");
 
@@ -27,6 +23,8 @@ internal abstract class ServiceClientRepositoryBase<TEntity> where TEntity : cla
         {
             entity = MappingProfiles.TryMap<TServiceClientEntity, TEntity>(response.Value);
         }
+
+        //TO DO: If respone is failure then maybe log failure?
 
         return entity;
     }
