@@ -520,3 +520,4 @@ AzureFunctions/.vscode/extensions.json
 *.tfstate.backup
 *.conf
 *x5.exe
+*.terraform
