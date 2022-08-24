@@ -14,23 +14,7 @@ module "sql_server" {
   sql_server_version  = var.sql_server_version
   sql_admin_login     = var.sql_admin_login
   sql_admin_password  = var.sql_admin_password
-  tfstate_rg_name     = module.resource_group.tfstate_rg_name
-}
-
-module "storage_account" {
-  source = "./modules/storage_container"
-
-  # Pass variables to module
-  company                    = var.company
-  account_kind               = var.account_kind
-  account_tier               = var.account_tier
-  account_access_tier        = var.account_access_tier
-  account_replication_type   = var.account_replication_type
-  is_traffic_only            = var.is_traffic_only
-  environment                = var.environment
-  tfstate_rg_name            = module.resource_group.tfstate_rg_name
-  tfstate_rg_location        = module.resource_group.tfstate_rg_location
-  storage_account_depends_on = module.resource_group.tfstate_rg
+  tfstate_rg_name     = module.resource_group.dev_rg_name
 }
 
 module "web_app" {

@@ -19,53 +19,10 @@ variable "rg_location" {
   default     = "north europe"
 }
 
-
-# azure storage account kind
-variable "account_kind" {
-  type        = string
-  description = "Azure storage account kind"
-  default     = "StorageV2"
-}
-
-# azure storage account tier
-variable "account_tier" {
-  type        = string
-  description = "Azure storage account tier"
-  default     = "Standard"
-}
-
-# azure storage account access tier
-variable "account_access_tier" {
-  type        = string
-  description = "Azure storage account access tier"
-  default     = "Hot"
-}
-
-# azure storage account replication type
-variable "account_replication_type" {
-  type        = string
-  description = "Azure storage account replication type"
-  default     = "ZRS"
-}
-
-# azure storage account http traffic only option
-variable "is_traffic_only" {
-  type        = bool
-  description = "Azure storage account http traffic only option"
-  default     = true
-}
-
 # prevent destroy resource group lifecycle
 variable "prevent_destroy_rg" {
   type        = bool
   description = "Prevent destroy resource group lifecycle"
-  default     = true
-}
-
-# prevent destroy storage account lifecycle
-variable "prevent_destroy_sa" {
-  type        = bool
-  description = "Prevent destroy storage account lifecycle"
   default     = true
 }
 
@@ -112,14 +69,14 @@ variable "sql_server_version" {
   default     = "12.0"
 }
 
-#db username
+# db username
 variable "sql_admin_login" {
   description = "Database administrator username"
   type        = string
   sensitive   = true
 }
 
-#db password
+# db password
 variable "sql_admin_password" {
   description = "Database administrator password"
   type        = string
