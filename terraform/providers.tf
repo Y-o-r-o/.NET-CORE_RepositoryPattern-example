@@ -15,6 +15,3 @@ provider "azurerm" {
   environment = "public"
   features {}
 }
-
-data "azurerm_client_config" "current" {
-}

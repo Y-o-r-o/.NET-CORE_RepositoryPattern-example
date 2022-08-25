@@ -14,7 +14,7 @@ module "sql_server" {
   sql_server_version  = var.sql_server_version
   sql_admin_login     = var.sql_admin_login
   sql_admin_password  = var.sql_admin_password
-  tfstate_rg_name     = module.resource_group.dev_rg_name
+  dev_rg_name        = module.resource_group.dev_rg_name
 }
 
 module "web_app" {
