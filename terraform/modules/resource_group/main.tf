@@ -1,5 +1,5 @@
 # Create a Resource Group for Web App
-resource "azurerm_resource_group" "dev" {
+resource "azurerm_resource_group" "repPattern" {
   name     = "development-rg"
   location = var.rg_location
 

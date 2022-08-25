@@ -1,31 +1,32 @@
 
-resource "azurerm_mssql_server" "dev" {
+resource "azurerm_mssql_server" "repPattern" {
   name                         = var.sql_server_name
-  resource_group_name          = var.dev_rg_name
+  resource_group_name          = var.repPattern_rg_name
   location                     = var.sql_server_location
   version                      = var.sql_server_version
   administrator_login          = var.sql_admin_login
   administrator_login_password = var.sql_admin_password
 }
 
-resource "azurerm_mssql_database" "dev" {
-  name        = "RepPatternDB"
-  server_id   = azurerm_mssql_server.dev.id
-  max_size_gb = 1
-  collation   = "SQL_Latin1_General_CP1_CI_AS"
-  sku_name    = "Basic"
+resource "azurerm_mssql_database" "repPattern" {
+  name        = var.mssql_db_name
+  server_id   = azurerm_mssql_server.repPattern.id
+  max_size_gb = var.mssql_db_size_gb
+  collation   = var.mssql_db_collation
+  sku_name    = var.mssql_sku
+  
 }
 
-resource "azurerm_mssql_firewall_rule" "local" {
-  name             = "FirewallRuleForLocal"
-  server_id        = azurerm_mssql_server.dev.id
-  start_ip_address = "213.197.163.10"
-  end_ip_address   = "213.197.163.10"
+resource "azurerm_mssql_firewall_rule" "repPattern_local" {
+  name             = var.local_firewal_rule_name
+  server_id        = azurerm_mssql_server.repPattern.id
+  start_ip_address = var.local_firewal_rule_ip
+  end_ip_address   = var.local_firewal_rule_ip
 }
 
-resource "azurerm_mssql_firewall_rule" "cloud" {
-  name             = "FirewallRuleForCloud"
-  server_id        = azurerm_mssql_server.dev.id
-  start_ip_address = "20.107.224.18"
-  end_ip_address   = "20.107.224.18"
+resource "azurerm_mssql_firewall_rule" "repPattern_cloud" {
+  name             = var.cloud_firewal_rule_name
+  server_id        = azurerm_mssql_server.repPattern.id
+  start_ip_address = var.cloud_firewal_rule_ip
+  end_ip_address   = var.cloud_firewal_rule_ip
 }

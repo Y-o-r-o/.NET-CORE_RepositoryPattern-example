@@ -19,12 +19,12 @@ variable "os_type" {
   default     = "Windows"
 }
 
-variable "dev_rg_name" {
+variable "repPattern_rg_name" {
   description = "tfstate resource group name"
-  type = string
+  type        = string
 }
 
-variable "dev_rg_location" {
+variable "repPattern_rg_location" {
   description = "tfstate resource group location"
-  type = string
+  type        = string
 }
