@@ -14,7 +14,7 @@ resource "azurerm_mssql_database" "repPattern" {
   max_size_gb = var.mssql_db_size_gb
   collation   = var.mssql_db_collation
   sku_name    = var.mssql_sku
-  
+
 }
 
 resource "azurerm_mssql_firewall_rule" "repPattern_local" {
