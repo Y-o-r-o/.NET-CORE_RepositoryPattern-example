@@ -1,5 +1,5 @@
-output "repPattern_web_app_name" {
-  value = module.web_app.repPattern_web_app_name
+output "rep_pattern_web_app_name" {
+  value = module.web_app.rep_pattern_web_app_name
 }
 
 output "connection_string" {

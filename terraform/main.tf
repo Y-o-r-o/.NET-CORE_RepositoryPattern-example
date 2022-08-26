@@ -1,12 +1,12 @@
 module "resource_group" {
-  source = "./modules/resource_group"
+  source = "./modules/azure/resource_group"
 
   environment = var.environment
   rg_location = var.rg_location
 }
 
 module "sql_server" {
-  source = "./modules/sql_server"
+  source = "./modules/azure/sql_server"
 
   # Pass variables to module
   sql_server_name               = var.sql_server_name
@@ -22,17 +22,17 @@ module "sql_server" {
   local_firewal_rule_ip         = var.local_firewal_rule_ip
   cloud_firewal_rule_name       = var.cloud_firewal_rule_name
   cloud_firewal_rule_ip         = var.cloud_firewal_rule_ip
-  repPattern_rg_name            = module.resource_group.repPattern_rg_name
+  rep_pattern_rg_name            = module.resource_group.rep_pattern_rg_name
 }
 
 module "web_app" {
-  source = "./modules/web_app"
+  source = "./modules/azure/web_app"
 
   # Pass variables to module
   environment            = var.environment
   web_app_name           = var.web_app_name
   sku_tier               = var.sku_tier
   os_type                = var.os_type
-  repPattern_rg_name     = module.resource_group.repPattern_rg_name
-  repPattern_rg_location = module.resource_group.repPattern_rg_location
+  rep_pattern_rg_name     = module.resource_group.rep_pattern_rg_name
+  rep_pattern_rg_location = module.resource_group.rep_pattern_rg_location
 }
