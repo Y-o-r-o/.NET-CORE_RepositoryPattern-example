@@ -74,7 +74,7 @@ variable "cloud_firewal_rule_name" {
 variable "cloud_firewal_rule_ip" {
   description = "cloud firewall ip"
   type        = string
-  default     = "20.107.224.18"
+  default     = "20.107.224.17"
 }
 
 

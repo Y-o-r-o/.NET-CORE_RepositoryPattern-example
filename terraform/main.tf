@@ -22,7 +22,7 @@ module "sql_server" {
   local_firewal_rule_ip   = var.local_firewal_rule_ip
   cloud_firewal_rule_name = var.cloud_firewal_rule_name
   cloud_firewal_rule_ip   = var.cloud_firewal_rule_ip
-  rep_pattern_rg_name             = module.resource_group.rep_pattern_rg_name
+  repPattern_rg_name             = module.resource_group.repPattern_rg_name
 }
 
 module "web_app" {
@@ -32,6 +32,6 @@ module "web_app" {
   web_app_name    = var.web_app_name
   sku_tier        = var.sku_tier
   os_type         = var.os_type
-  rep_pattern_rg_name     = module.resource_group.rep_pattern_rg_name
-  rep_pattern_rg_location = module.resource_group.rep_pattern_rg_location
+  repPattern_rg_name     = module.resource_group.repPattern_rg_name
+  repPattern_rg_location = module.resource_group.repPattern_rg_location
 }

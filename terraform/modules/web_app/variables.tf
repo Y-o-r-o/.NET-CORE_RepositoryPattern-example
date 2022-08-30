@@ -1,3 +1,9 @@
+variable "environment" {
+  type        = string
+  description = "This variable defines the environment to be built"
+  default     = "Development"
+}
+
 # azure web app name
 variable "web_app_name" {
   type        = string

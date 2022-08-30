@@ -8,6 +8,11 @@ resource "azurerm_windows_web_app" "rep_pattern" {
   site_config {
     always_on = false
   }
+
+  app_settings = tomap({
+    "ASPNETCORE_ENVIRONMENT" = var.environment
+  })
+
 }
 
 resource "azurerm_service_plan" "rep_pattern" {
