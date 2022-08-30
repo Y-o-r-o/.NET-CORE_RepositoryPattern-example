@@ -27,7 +27,7 @@ variable "sql_admin_password" {
   sensitive   = true
 }
 
-variable "repPattern_rg_name" {
+variable "rep_pattern_rg_name" {
   description = "tfstate resource group name"
   type        = string
 }

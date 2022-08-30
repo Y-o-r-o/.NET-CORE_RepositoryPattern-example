@@ -1,15 +1,15 @@
-output "repPattern_rg_name" {
-  value = azurerm_resource_group.repPattern.name
+output "rep_pattern_rg_name" {
+  value = azurerm_resource_group.rep_pattern.name
 }
 
-output "repPattern_rg_location" {
-  value = azurerm_resource_group.repPattern.location
+output "rep_pattern_rg_location" {
+  value = azurerm_resource_group.rep_pattern.location
 }
 
-output repPattern_rg {
+output rep_pattern_rg {
   value = {}
 
   depends_on = [
-    azurerm_resource_group.repPattern
+    azurerm_resource_group.rep_pattern
   ]
 }

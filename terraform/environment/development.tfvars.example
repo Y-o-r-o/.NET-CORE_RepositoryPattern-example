@@ -1,0 +1,4 @@
+environment = "Development"
+
+sql_admin_login    = "testadmin"
+sql_admin_password = "AdminOfThisTestDB@1@2"

@@ -45,14 +45,14 @@ variable "os_type" {
 variable "web_app_name" {
   type        = string
   description = "Azure web app name"
-  default     = "development-web-app"
+  default     = "web-app"
 }
 
 # azure sql server name
 variable "sql_server_name" {
   type        = string
   description = "Azure sql server name"
-  default     = "orionincdevdb"
+  default     = "my-sql-server"
 }
 
 # azure sql server region
