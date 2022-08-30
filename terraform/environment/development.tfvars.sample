@@ -1,6 +1,0 @@
-#This is sample of tfvars. Original one is in gitignore list.
-
-environment = "Development"
-
-sql_admin_login    = "testadmin"
-sql_admin_password = "AdminOfThisTestDB@1@2"
