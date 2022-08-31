@@ -44,14 +44,14 @@ variable "os_type" {
 variable "web_app_name" {
   type        = string
   description = "Azure web app name"
-  default     = "web-app"
+  default     = "rep-patt-web-app"
 }
 
 # azure sql server name
 variable "sql_server_name" {
   type        = string
   description = "Azure sql server name"
-  default     = "my-sql-server"
+  default     = "rep-patt-sql-server"
 }
 
 # azure sql server region

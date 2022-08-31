@@ -11,7 +11,6 @@ Description.
 
 ### Authenticate terraform to azure.
 1) Login with Azure CLI with the PowerShell `az login` command so that terraform could use your Azure account.
-2) Select a subscription account. PowerShell: `az account set --subscription <Azure-SubscriptionId>`
 
 ### Setup state file in the cloud.
 Terraform must store the state of your managed infrastructure and configuration. Terraform uses this state file to map real-world resources to your configuration, keep track of metadata, and improve performance for large infrastructures.

@@ -8,7 +8,7 @@ variable "environment" {
 variable "web_app_name" {
   type        = string
   description = "Azure web app name"
-  default     = "web-app"
+  default     = "rep-pattweb-app"
 }
 
 # azure service plan sku tier
