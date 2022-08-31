@@ -33,6 +33,3 @@ terraform {
 1) Run command `terraform init` to initialize terraform. With this command terraform downloads required providers, builds modules dependencies, checks if code is correct, etc..
 2) Run command `terraform plan -var-file="environment/<yours environment>.tfvars"` (for tfvars sample watch environment/development.tfvars.example file). This command creates an execution plan, which lets you preview the changes that Terraform plans to make to your infrastructure.
 3) Run command `terraform apply -var-file="environment/<yours environment>.tfvars"` this command executes the actions proposed in a Terraform plan.
-
-## Contributing
-Pull requests are welcome. For significant changes, please open an issue first to discuss what you would like to change.
