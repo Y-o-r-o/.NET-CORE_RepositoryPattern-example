@@ -17,7 +17,7 @@ internal class SwashbuckleFunctions
     [SwaggerIgnore]
     [Function("Swagger")]
     public Task<HttpResponseData> Run(
-        [HttpTrigger(AuthorizationLevel.Function, "get", Route = "Swagger/json")] HttpRequestData req)
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "Swagger/json")] HttpRequestData req)
     {
         return Task.FromResult(_swashBuckleClient.CreateSwaggerJsonDocumentResponse(req));
     }
@@ -25,7 +25,7 @@ internal class SwashbuckleFunctions
     [SwaggerIgnore]
     [Function("SwaggerUi")]
     public Task<HttpResponseData> Run2(
-        [HttpTrigger(AuthorizationLevel.Function, "get", Route = "Swagger/ui")] HttpRequestData req)
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "Swagger/ui")] HttpRequestData req)
     {
         return Task.FromResult(_swashBuckleClient.CreateSwaggerUIResponse(req, "swagger/json"));
     }
